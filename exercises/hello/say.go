@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import f "fmt"
 
 func say() {
-	fmt.Println("Eita")
+	f.Println("Eita")
 }
