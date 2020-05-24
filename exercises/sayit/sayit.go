@@ -5,6 +5,6 @@ import (
 )
 
 // Hello is an exported function
-func Hello() {
-	fmt.Println("Exportado")
+func Hello(s string) {
+	fmt.Println(s)
 }

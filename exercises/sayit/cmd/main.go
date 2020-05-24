@@ -3,5 +3,5 @@ package main
 import "github.com/flucas97/exercises/sayit"
 
 func main() {
-	sayit.Hello()
+	sayit.Hello("Eita porra")
 }
