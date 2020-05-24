@@ -6,12 +6,17 @@ import (
 
 func main() {
 	var (
-		age  int
-		name string
+		age     int
+		lastAge int
+		name    string
+		phrase  = "Ola mundo!"
 	)
-	phrase := "Ola mundo!"
 	fmt.Println(phrase)
 
-	age, name = 22, "Lucas"
+	age, lastAge, name = 22, 21, "Lucas"
 	fmt.Println(name, age)
+
+	age, lastAge = lastAge, age
+
+	fmt.Println(age)
 }
