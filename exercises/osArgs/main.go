@@ -20,4 +20,5 @@ func main() {
 	}
 
 	fmt.Printf("%#v\n", args)
+	fmt.Println("Number of itens at slice:", len(args))
 }
