@@ -16,7 +16,7 @@ func main() {
 	*/
 
 	for i := 0; i < len(args); i++ {
-		fmt.Println("args: ", args[i])
+		fmt.Println("Argument position", i, ":", args[i])
 	}
 
 	fmt.Printf("%#v\n", args)
