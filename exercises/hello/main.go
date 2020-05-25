@@ -15,7 +15,7 @@ func main() {
 	fmt.Printf("%T\n", phrase)
 
 	age, lastAge, name = 22, 21, "Lucas"
-	fmt.Println(name, age)
+	fmt.Printf("Seu nome é %s, e sua idade é %d\n", name, age)
 
 	age, lastAge = lastAge, age
 
