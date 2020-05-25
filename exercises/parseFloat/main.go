@@ -14,4 +14,8 @@ func main() {
 	meters := feet * 0.3048
 
 	fmt.Printf("%g feets is %g meters\n", feet, meters)
+
+	intNumber := 2
+
+	fmt.Println("O número em string é: " + strconv.Itoa(intNumber))
 }
