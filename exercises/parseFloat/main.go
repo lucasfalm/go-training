@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -18,4 +19,7 @@ func main() {
 	intNumber := 2
 
 	fmt.Println("O número em string é: " + strconv.Itoa(intNumber))
+
+	secondArg := os.Args[2]
+	fmt.Println(strings.ToUpper(secondArg))
 }
