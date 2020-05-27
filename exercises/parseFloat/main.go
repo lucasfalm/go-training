@@ -4,22 +4,25 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"strings"
 )
 
 func main() {
-	args := os.Args[1]
+	var (
+		args = os.Args
+	)
+	if len(args) >= 2 {
+		i := args[1]
+		feet, err := strconv.ParseFloat(i, 64)
+		if err == nil {
+			meters := feet * 0.3048
 
-	feet, _ := strconv.ParseFloat(args, 64)
-
-	meters := feet * 0.3048
-
-	fmt.Printf("%g feets is %g meters\n", feet, meters)
-
-	intNumber := 2
-
-	fmt.Println("O número em string é: " + strconv.Itoa(intNumber))
-
-	secondArg := os.Args[2]
-	fmt.Println(strings.ToUpper(secondArg))
+			fmt.Printf("%g feets is %g meters\n", feet, meters)
+		} else {
+			fmt.Printf("Error -> %v", err)
+			return
+		}
+	} else {
+		fmt.Println("Write a number in feets")
+		return
+	}
 }
