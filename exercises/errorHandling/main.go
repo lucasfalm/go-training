@@ -12,7 +12,7 @@ func main() {
 		args = os.Args
 	)
 
-	if len(args) != 2 {
+	if len(args) == 2 {
 		n := args[1]
 		age, err := strconv.Atoi(n)
 		if err == nil {
