@@ -10,7 +10,7 @@ func main() {
 	var (
 		args = os.Args
 	)
-	if len(args) >= 2 {
+	if len(args) != 2 {
 		i := args[1]
 		feet, err := strconv.ParseFloat(i, 64)
 		if err == nil {
