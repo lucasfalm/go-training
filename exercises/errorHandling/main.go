@@ -15,11 +15,11 @@ func main() {
 	if len(args) >= 2 {
 		n := args[1]
 		age, err := strconv.Atoi(n)
-		if err != nil {
+		if err == nil {
+			fmt.Printf("Success converion %q into %v\n", n, age)
+		} else {
 			fmt.Println("Error! ", err)
 			return
-		} else {
-			fmt.Printf("Success converion %q into %v\n", n, age)
 		}
 	} else {
 		fmt.Println("Write an input to be converted")
