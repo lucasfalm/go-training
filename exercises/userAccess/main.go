@@ -27,9 +27,7 @@ func main() {
 		return
 	}
 
-	userName, password = os.Args[1], os.Args[2]
-
-	if userName != validUser {
+	if userName, password = os.Args[1], os.Args[2]; userName != validUser {
 		fmt.Printf(denied, userName)
 	} else if password != validPassword {
 		fmt.Printf(errPwd, userName)
