@@ -6,11 +6,7 @@ import (
 )
 
 func main() {
-	var (
-		h = time.Now().Hour()
-	)
-
-	switch true {
+	switch h := time.Now().Hour(); {
 	case h >= 0 && h <= 12:
 		fmt.Println("Good morning")
 	case h >= 13 && h <= 18:
