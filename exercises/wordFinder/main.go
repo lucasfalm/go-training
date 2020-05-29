@@ -21,6 +21,7 @@ func main() {
 				if v == w {
 					fmt.Printf("The %q is at position %v: %q\n", v, i, w)
 					flag++
+					break
 				} else {
 					if i == (len(words)-1) && flag == 0 {
 						fmt.Printf("We dont find any word in match. Try again\n")
