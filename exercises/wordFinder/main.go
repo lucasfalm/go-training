@@ -7,13 +7,15 @@ import (
 )
 
 func main() {
-	const corpus = "lazy cat jumps again and again and again"
+	const (
+		corpus = "lazy cat jumps again and again and again"
+	)
 	var (
 		words = strings.Fields(corpus)
 		query = os.Args[1:]
 		flag  int
 	)
-	if len(query) > 1 {
+	if len(query) >= 1 {
 		for _, v := range query {
 			for i, w := range words {
 				if v == w {
