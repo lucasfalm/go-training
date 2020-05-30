@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 )
 
 func main() {
@@ -13,18 +12,23 @@ func main() {
 	)
 
 	var (
-		books  [yearly]string
 		sBooks [summer]string
 		//wBooks [winter]string
 	)
-
-	for i := range books {
-		books[i] = "Book ID: " + strconv.Itoa(i+1)
+	books := [yearly]string{
+		"Book 1",
+		"Book 2",
+		"Book 3",
+		"Book 4",
 	}
 
-	for _, v := range books {
-		for y := range sBooks {
-			sBooks[y] = v
+	for i := range sBooks {
+		for y, v := range books {
+			if i == y {
+				sBooks[i] = v
+			} else {
+				continue
+			}
 		}
 	}
 
