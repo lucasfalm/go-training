@@ -12,15 +12,15 @@ func main() {
 		args  = os.Args[1:]
 		name  string
 		tMood string
-		happy = [2]string{
+		happy = [...]string{
 			"feels happy",
 			"feels awnsome!",
 		}
-		sad = [2]string{
+		sad = [...]string{
 			"feels sad",
 			"feels unhapy",
 		}
-		mad = [2]string{
+		mad = [...]string{
 			"feels mad",
 			"feels hungry",
 		}
