@@ -12,21 +12,20 @@ func main() {
 		args  = os.Args[1:]
 		name  string
 		tMood string
+		happy = [2]string{
+			"feels happy",
+			"feels awnsome!",
+		}
+		sad = [2]string{
+			"feels sad",
+			"feels unhapy",
+		}
+		mad = [2]string{
+			"feels mad",
+			"feels hungry",
+		}
+		mood = [...][2]string{happy, mad, sad}
 	)
-
-	happy := [2]string{
-		"feels happy",
-		"feels awnsome!",
-	}
-	sad := [2]string{
-		"feels sad",
-		"feels unhapy",
-	}
-	mad := [2]string{
-		"feels mad",
-		"feels hungry",
-	}
-	mood := [...][2]string{happy, mad, sad}
 
 	if len(args) == 2 {
 		name, tMood = args[0], args[1]
