@@ -29,21 +29,20 @@ func main() {
 	mood := [...][2]string{happy, mad, sad}
 
 	if len(args) == 2 {
-		name = args[0]
-		tMood = args[1]
+		name, tMood = args[0], args[1]
+
 		rand.Seed(time.Now().UnixNano())
 		n := rand.Intn(len(mood) - 1)
 
 		switch true {
 		case tMood == "happy":
 			fmt.Printf("%s %v\n", name, mood[0][n])
-
 		case tMood == "mad":
 			fmt.Printf("%s %v\n", name, mood[1][n])
 		default:
 			fmt.Printf("%s %v\n", name, mood[2][n])
 		}
 	} else {
-		fmt.Println("[Please, write a name]")
+		fmt.Println("[Please, write a name and a feeling]")
 	}
 }
