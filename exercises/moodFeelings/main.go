@@ -20,7 +20,10 @@ func main() {
 		sad    = "feels sad"
 	)
 
-	mood := [...]string{happy, hungry, mad, sad}
+	//mood := [...]string{happy, hungry, mad, sad}
+	type moods [4]string
+
+	mood := moods{happy, hungry, mad, sad}
 
 	if len(args) == 1 {
 		name = args[0]
