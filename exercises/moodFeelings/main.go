@@ -21,7 +21,9 @@ func main() {
 	)
 
 	//mood := [...]string{happy, hungry, mad, sad}
-	type moods [4]string
+	type (
+		moods [4]string
+	)
 
 	mood := moods{happy, hungry, mad, sad}
 
