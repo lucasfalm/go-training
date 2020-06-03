@@ -1,14 +1,20 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
+
+type (
+	cannabis []string
+)
 
 func main() {
-	type (
-		cannabis []string
-	)
+
 	var (
 		sativa cannabis
 		indica cannabis
+		args   = os.Args[1:]
 	)
 	sativa = append(sativa, "Cannalope Haze", "Sour Kosher")
 	indica = append(indica, "Afghan Kush", "Quick Kush")
@@ -21,5 +27,14 @@ func main() {
 	for _, z := range indica {
 		fmt.Printf("%v\n", z)
 	}
+	if len(args) >= 1 {
+		sativa = sativa.addCannabis(args[0])
+	}
 
+	fmt.Println(sativa)
+}
+
+func (c cannabis) addCannabis(cName string) cannabis {
+	c = append(c, cName)
+	return c
 }
