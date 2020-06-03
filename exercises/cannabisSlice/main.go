@@ -7,6 +7,8 @@ import (
 
 type (
 	cannabis []string
+	// multidimentional slice
+	canabinoides [][]cannabis
 )
 
 func main() {
