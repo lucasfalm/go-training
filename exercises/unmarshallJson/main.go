@@ -6,7 +6,7 @@ import (
 )
 
 type user struct {
-	Name     string `json:"username"`
+	Name     string `json:"username"`           // field tag
 	Password string `json:"password,omitempty"` // omitempty is to hidde the json field if it has 0 value
 }
 
