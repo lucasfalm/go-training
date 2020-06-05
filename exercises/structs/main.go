@@ -31,17 +31,17 @@ func main() {
 	fmt.Println("\nThe Sativa flowers are:")
 	for _, f := range cSativa.flowers {
 		fmt.Printf("Name: %v ------- THC: %v\n", f.name, f.thc)
-		for i, v := range f.geo {
-			fmt.Printf("Country: %v ----- Qtde: %v\n\n", i, v)
+		for c, q := range f.geo {
+			fmt.Printf("Country: %v ----- Qtde: %v\n\n", c, q)
 		}
 	}
 	fmt.Println("----------------------------")
 	fmt.Println("\n\nThe Indica flowers are:")
 
-	for _, g := range cIndica.flowers {
-		fmt.Printf("Name:%v ------- THC: %v\n", g.name, g.thc)
-		for i, v := range g.geo {
-			fmt.Printf("Country: %v ----- Qtde: %v\n\n", i, v)
+	for _, f := range cIndica.flowers {
+		fmt.Printf("Name:%v ------- THC: %v\n", f.name, f.thc)
+		for c, q := range f.geo {
+			fmt.Printf("Country: %v ----- Qtde: %v\n\n", c, q)
 		}
 	}
 }
