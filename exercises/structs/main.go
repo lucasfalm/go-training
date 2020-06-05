@@ -2,22 +2,44 @@ package main
 
 import "fmt"
 
+type flowers struct {
+	name string
+	thc  int
+}
 type cannabis struct {
 	name    string
-	flowers []string
+	flowers []flowers
 }
 
 func main() {
-	cS := cannabis{
+	cSativa := cannabis{
 		name: "Sativa",
 	}
-	cS = cS.updateFlower("Gorilla Haze")
+	cSativa = cSativa.updateFlower("Gorilla Haze", 27)
 
-	fmt.Println(cS)
+	cIndica := cannabis{
+		name: "Indica",
+	}
+
+	cIndica = cIndica.updateFlower("Notherland", 22)
+
+	fmt.Println("\nThe Sativa flowers are:")
+	for _, f := range cSativa.flowers {
+		fmt.Printf("Name: %v ------- THC: %v\n", f.name, f.thc)
+	}
+
+	fmt.Println("\n\nThe Indica flowers are:")
+	for _, f := range cIndica.flowers {
+		fmt.Printf("Name:%v ------- THC: %v\n", f.name, f.thc)
+	}
 
 }
 
-func (c cannabis) updateFlower(nFlower string) cannabis {
-	c.flowers = append(c.flowers, nFlower)
+func (c cannabis) updateFlower(n string, thc int) cannabis {
+	nF := flowers{
+		name: n,
+		thc:  thc,
+	}
+	c.flowers = append(c.flowers, nF)
 	return c
 }
