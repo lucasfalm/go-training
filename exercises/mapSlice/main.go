@@ -8,13 +8,11 @@ import (
 func main() {
 	var (
 		// a map doesn't contains the values it self, it just contains a pointer to map header
-
-		// I could declare make(map[string]string) or map[string]string{}, both ways initialize the map
-		ptEn = map[string]string{}
+		// I could declare make(map[string]string, initialized lenght) or map[string]string{}, both ways initialize the map
+		ptEn = make(map[string]string, 100)
 		args = os.Args[1:]
 		flag bool
 	)
-
 	ptEn["Olá"], ptEn["Carro"] = "Hello", "Car"
 
 	if len(args) == 1 {
