@@ -3,12 +3,12 @@ package main
 import "fmt"
 
 type (
-	// Define flowers type
+	// Define flowers struct
 	flowers struct {
 		name string
 		thc  int
 	}
-	// Define cannabis type
+	// Define cannabis struct
 	cannabis struct {
 		name    string
 		flowers []flowers
@@ -16,6 +16,7 @@ type (
 )
 
 func main() {
+	// Create new types of cannabis using struct type
 	cSativa, cIndica := cannabis{name: "Sativa"}, cannabis{name: "Indica"}
 
 	// Add new sativa and indicas flowers
