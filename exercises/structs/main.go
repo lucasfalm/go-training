@@ -7,7 +7,7 @@ type (
 	flowers struct {
 		name string
 		thc  int
-		geo  map[string]int // declare a map inside a struct
+		geo  map[string]int // declare a map inside the struct
 	}
 	// Define cannabis struct
 	cannabis struct {
@@ -22,7 +22,7 @@ func main() {
 
 	// Example of geo
 	eX := map[string]int{
-		"Brasil": 2, // countr and qtde of this flower at this country
+		"Brasil": 2, // country and qtde of this flower at this country
 	}
 	// Add new sativa and indicas flowers
 	cSativa, cIndica = cSativa.updateFlower("Gorilla Haze", 27, eX), cIndica.updateFlower("Notherland", 22, eX)
