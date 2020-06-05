@@ -7,6 +7,7 @@ import (
 
 func main() {
 	var (
+		// a map doesn't contains the values it self, it just contains a pointer to map header
 		ptEn = map[string]string{}
 		args = os.Args[1:]
 		flag bool
