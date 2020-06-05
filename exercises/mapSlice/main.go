@@ -36,4 +36,8 @@ func main() {
 	} else {
 		fmt.Println("Write one word")
 	}
+	// delete a value from a key in map
+	delete(ptEn, "Olá")
+
+	fmt.Println(ptEn)
 }
