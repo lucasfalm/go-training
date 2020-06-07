@@ -30,7 +30,7 @@ func main() {
 	// Printing the flowers for each type
 	cSativa.printFlowers()
 	fmt.Println("----------------------------")
-	cannabis.printFlowers(cIndica) // another way to call methods
+	cIndica.printFlowers()
 }
 
 // Method to add new flowers for cannabis type
@@ -45,7 +45,7 @@ func (c *cannabis) updateFlower(n string, thc int, g map[string]int) {
 }
 
 // Method to print all flowers of Cannabis
-func (c cannabis) printFlowers() {
+func (c *cannabis) printFlowers() {
 	fmt.Printf("\nThe %s flowers are:\n", c.name)
 	for _, f := range c.flowers {
 		fmt.Printf("Name: %v ------- THC: %v\n", f.name, f.thc)
