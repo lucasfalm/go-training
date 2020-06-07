@@ -24,13 +24,13 @@ func main() {
 	eX, eY := createGeoEx("France", 200), createGeoEx("Brazil", 2500)
 
 	// Add new sativa and indicas flowers
-	cSativa.updateFlower("Gorilla Haze", 27, eX)
+	(&cSativa).updateFlower("Gorilla Haze", 27, eX) // go automatic use cSativa pointer instead the copy of objects itself (&cSativa) OR cSativa
 	cIndica.updateFlower("Notherland", 22, eY)
 
 	// Printing the flowers for each type
 	cSativa.printFlowers()
 	fmt.Println("----------------------------")
-	cIndica.printFlowers()
+	cannabis.printFlowers(cIndica) // another way to call methods
 }
 
 // Method to add new flowers for cannabis type
