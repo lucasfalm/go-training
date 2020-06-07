@@ -34,22 +34,13 @@ func main() {
 
 	// Printing the flowers for each type
 	fmt.Println("\nThe Sativa flowers are:")
-	for _, f := range cSativa.flowers {
-		fmt.Printf("Name: %v ------- THC: %v\n", f.name, f.thc)
-		for c, q := range f.geo {
-			fmt.Printf("Country: %v ----- Qtde: %v\n\n", c, q)
-		}
-	}
+	cSativa.printFlowers()
 
 	fmt.Println("----------------------------")
-	fmt.Println("\n\nThe Indica flowers are:")
 
-	for _, f := range cIndica.flowers {
-		fmt.Printf("Name:%v ------- THC: %v\n", f.name, f.thc)
-		for c, q := range f.geo {
-			fmt.Printf("Country: %v ----- Qtde: %v\n\n", c, q)
-		}
-	}
+	fmt.Println("\n\nThe Indica flowers are:")
+	cIndica.printFlowers()
+
 }
 
 // Function to add new flowers for cannabis type
@@ -61,4 +52,13 @@ func (c *cannabis) updateFlower(n string, thc int, g map[string]int) {
 	}
 	nF.geo = g                        // Give a value to the map
 	c.flowers = append(c.flowers, nF) // Insert every info into flower
+}
+
+func (c *cannabis) printFlowers() {
+	for _, f := range c.flowers {
+		fmt.Printf("Name: %v ------- THC: %v\n", f.name, f.thc)
+		for c, q := range f.geo {
+			fmt.Printf("Country: %v ----- Qtde: %v\n\n", c, q)
+		}
+	}
 }
