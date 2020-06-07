@@ -51,7 +51,7 @@ func (c *cannabis) updateFlower(n string, thc int, g map[string]int) {
 }
 
 // Function to print all flowers of Cannabis
-func (c *cannabis) printFlowers() {
+func (c cannabis) printFlowers() {
 	for _, f := range c.flowers {
 		fmt.Printf("Name: %v ------- THC: %v\n", f.name, f.thc)
 		for c, q := range f.geo {
