@@ -25,12 +25,12 @@ func main() {
 		cType := args[0]
 
 		if cType == "sativa" {
-			for _, v := range args[1:] {
-				sativa = sativa.addCannabis(v)
+			for _, f := range args[1:] {
+				sativa.addCannabis(f)
 			}
 		} else if cType == "indica" {
-			for _, v := range args[1:] {
-				indica = indica.addCannabis(v)
+			for _, f := range args[1:] {
+				indica.addCannabis(f)
 			}
 		} else {
 			fmt.Println("Choose [indica] [sativa]")
@@ -47,7 +47,6 @@ func main() {
 	}
 }
 
-func (c cannabis) addCannabis(cName string) cannabis {
-	c = append(c, cName)
-	return c
+func (c *cannabis) addCannabis(cName string) {
+	*c = append(*c, cName)
 }
