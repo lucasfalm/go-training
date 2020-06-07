@@ -19,6 +19,7 @@ type (
 func main() {
 	// Create new types of cannabis using struct type
 	cSativa, cIndica := cannabis{name: "Sativa"}, cannabis{name: "Indica"}
+
 	// Create examples of geo
 	eX := createGeoEx("France", 200)
 	eY := createGeoEx("Brazil", 2500)
