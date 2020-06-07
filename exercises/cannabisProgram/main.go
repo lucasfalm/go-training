@@ -21,22 +21,16 @@ func main() {
 	cSativa, cIndica := cannabis{name: "Sativa"}, cannabis{name: "Indica"}
 
 	// Create examples of geo
-	eX := createGeoEx("France", 200)
-	eY := createGeoEx("Brazil", 2500)
+	eX, eY := createGeoEx("France", 200), createGeoEx("Brazil", 2500)
 
 	// Add new sativa and indicas flowers
 	cSativa.updateFlower("Gorilla Haze", 27, eX)
 	cIndica.updateFlower("Notherland", 22, eY)
 
 	// Printing the flowers for each type
-	fmt.Println("\nThe Sativa flowers are:")
 	cSativa.printFlowers()
-
 	fmt.Println("----------------------------")
-
-	fmt.Println("\n\nThe Indica flowers are:")
 	cIndica.printFlowers()
-
 }
 
 // Function to add new flowers for cannabis type
@@ -52,6 +46,7 @@ func (c *cannabis) updateFlower(n string, thc int, g map[string]int) {
 
 // Function to print all flowers of Cannabis
 func (c cannabis) printFlowers() {
+	fmt.Printf("\nThe %s flowers are:\n", c.name)
 	for _, f := range c.flowers {
 		fmt.Printf("Name: %v ------- THC: %v\n", f.name, f.thc)
 		for c, q := range f.geo {
