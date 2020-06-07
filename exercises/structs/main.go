@@ -22,10 +22,15 @@ func main() {
 
 	// Example of geo
 	eX := map[string]int{
-		"Brasil": 2, // country and qtde of this flower at this country
+		"Brazil": 2500, // country and qtde of this flower at this country
+	}
+
+	eY := map[string]int{
+		"France": 200, // country and qtde of this flower at this country
 	}
 	// Add new sativa and indicas flowers
-	cSativa, cIndica = cSativa.updateFlower("Gorilla Haze", 27, eX), cIndica.updateFlower("Notherland", 22, eX)
+	cSativa.updateFlower("Gorilla Haze", 27, eX)
+	cIndica.updateFlower("Notherland", 22, eY)
 
 	// Printing the flowers for each type
 	fmt.Println("\nThe Sativa flowers are:")
@@ -35,6 +40,7 @@ func main() {
 			fmt.Printf("Country: %v ----- Qtde: %v\n\n", c, q)
 		}
 	}
+
 	fmt.Println("----------------------------")
 	fmt.Println("\n\nThe Indica flowers are:")
 
@@ -47,7 +53,7 @@ func main() {
 }
 
 // Function to add new flowers for cannabis type
-func (c cannabis) updateFlower(n string, thc int, g map[string]int) cannabis {
+func (c *cannabis) updateFlower(n string, thc int, g map[string]int) {
 	nF := flowers{
 		name: n,
 		thc:  thc,
@@ -55,5 +61,4 @@ func (c cannabis) updateFlower(n string, thc int, g map[string]int) cannabis {
 	}
 	nF.geo = g                        // Give a value to the map
 	c.flowers = append(c.flowers, nF) // Insert every info into flower
-	return c
 }
