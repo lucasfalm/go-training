@@ -33,7 +33,7 @@ func main() {
 	cIndica.printFlowers()
 }
 
-// Function to add new flowers for cannabis type
+// Method to add new flowers for cannabis type
 func (c *cannabis) updateFlower(n string, thc int, g map[string]int) {
 	nF := flowers{
 		name: n,
@@ -44,7 +44,7 @@ func (c *cannabis) updateFlower(n string, thc int, g map[string]int) {
 	c.flowers = append(c.flowers, nF) // Insert every info into flower
 }
 
-// Function to print all flowers of Cannabis
+// Method to print all flowers of Cannabis
 func (c cannabis) printFlowers() {
 	fmt.Printf("\nThe %s flowers are:\n", c.name)
 	for _, f := range c.flowers {
