@@ -49,6 +49,7 @@ func stop(v []vehicleInterface) {
 	}
 	// List received
 	for _, it := range v {
+		// Use interface as a method
 		c, ok := it.(carCheck)
 		if !ok {
 			continue
