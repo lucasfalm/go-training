@@ -15,15 +15,16 @@ type (
 	airplane struct {
 		number string
 		horses string
+		code   interface{} // empty interface, it could be string, or int, or empty
 	}
 )
 
 func main() {
 	var (
-		c, m = car{name: "Golf", color: "Black"}, airplane{number: "Bis", horses: "Blue"}
+		c, a = car{name: "Golf", color: "Black"}, airplane{number: "Bis", horses: "Blue"}
 		list []vehicleInterface
 	)
-	list = append(list, c, m)
+	list = append(list, c, a)
 	stop(list)
 
 	for _, y := range list {
@@ -38,7 +39,7 @@ func (c car) turnOn() {
 	fmt.Println("Car on!")
 }
 
-func (m airplane) turnOn() {
+func (a airplane) turnOn() {
 	fmt.Println("Airplane on!")
 }
 
@@ -47,15 +48,23 @@ func stop(v []vehicleInterface) {
 	type carCheck interface {
 		vrumvrum()
 	}
+
 	// List received
 	for _, it := range v {
-		// Use interface as a method
-		c, ok := it.(carCheck)
-		if !ok {
+		// check the type of interface
+		switch e := it.(type) {
+		case car:
+			e.vrumvrum()
+		default:
 			continue
 		}
+		// Use interface as a method
+		//c, ok := it.(carCheck)
+		//if !ok {
+		//	continue
+		//}
 
-		c.vrumvrum()
+		//c.vrumvrum()
 	}
 
 }
