@@ -36,5 +36,5 @@ func applyDiscount(actualPrice int, d int) int {
 }
 
 func printDiscount(name string, value int) {
-	fmt.Printf("\nNew price of %v ------ cost: U$%v\n\n", name, value)
+	fmt.Printf("New price of %v ------ cost: U$%v\n\n", name, value)
 }
