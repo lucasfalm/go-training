@@ -1,14 +1,7 @@
 package main
 
-import "fmt"
-
 type (
 	book struct {
-		name  string
-		value interface{}
+		product
 	}
 )
-
-func (b book) print() {
-	fmt.Printf("%v ------ cost: U$%v\n", b.name, b.value)
-}
