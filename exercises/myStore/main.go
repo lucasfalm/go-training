@@ -9,5 +9,6 @@ func main() {
 
 	for _, p := range store {
 		p.print()
+		p.discount(10) // Apply 10% discount
 	}
 }
