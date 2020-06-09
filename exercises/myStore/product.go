@@ -17,21 +17,22 @@ func (p *product) print() {
 }
 
 func (p *product) discount(d int) {
+	// verify what is the type of p.value (string or int)
 	switch p.value.(type) {
 	case int:
 		p.value = applyDiscount(p.value.(int), d)
 		printDiscount(p.name, p.value.(int))
 	case string:
-		cV, _ := strconv.Atoi(p.value.(string))
-		p.value = applyDiscount(cV, d)
+		actualPrice, _ := strconv.Atoi(p.value.(string))
+		p.value = applyDiscount(actualPrice, d)
 		printDiscount(p.name, p.value.(int))
 	default:
 		fmt.Println("Error")
 	}
 }
 
-func applyDiscount(aP int, d int) int {
-	return aP - ((aP * d) / 100)
+func applyDiscount(actualPrice int, d int) int {
+	return actualPrice - ((actualPrice * d) / 100)
 }
 
 func printDiscount(name string, value int) {
