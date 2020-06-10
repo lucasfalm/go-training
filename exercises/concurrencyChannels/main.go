@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	c := make(chan int)
+	c := make(chan int, 2)
 	// send
 	go foo(c) // init goroutine
 	// receive
@@ -13,9 +13,15 @@ func main() {
 }
 
 func foo(c chan<- int) {
-	c <- 55
+	for i := 0; i < 100; i++ {
+		c <- i // pass i value to channel, 100 times
+	}
+
+	close(c) // close the channel
 }
 
 func bar(c <-chan int) {
-	fmt.Println(<-c)
+	for v := range c { // range over the channel
+		fmt.Println(v)
+	}
 }
