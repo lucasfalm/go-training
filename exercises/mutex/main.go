@@ -24,7 +24,7 @@ func main() {
 			mu.Unlock()       // unlock thread
 			wg.Done()         // finish goroutine
 		}()
-		fmt.Printf("Thread %v and counter is: %v\n", i, counter)
+		fmt.Printf("Thread %v and counter is: %v\t\n", i, counter)
 	}
 	wg.Wait() // wait for all goroutines end
 
