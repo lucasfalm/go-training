@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -34,8 +35,9 @@ type (
 var (
 	args = os.Args[1:]
 	// Create new types of cannabis using struct type
-	cSativa = cannabis{name: "Sativa"}
-	cIndica = cannabis{name: "Indica"}
+	cSativa  = cannabis{name: "Sativa"}
+	cIndica  = cannabis{name: "Indica"}
+	division = func() { fmt.Println(strings.Repeat("-", 50)) }
 )
 
 func main() {
@@ -53,8 +55,9 @@ func main() {
 		return
 	}
 	// Printing the flowers for each type
+	fmt.Println("C A N N A B I S:")
+	division()
 	cSativa.printFlowers()
-	fmt.Println("----------------------------")
 	cIndica.printFlowers()
 }
 
@@ -95,11 +98,12 @@ func (c *cannabis) checkFlowers(fName string) bool {
 func (c *cannabis) printFlowers() {
 	fmt.Printf("\nThe %s flowers are:\n", c.name)
 	for _, f := range c.flowers {
-		fmt.Printf("Name: %v ------- THC: %v\n", f.name, f.thc)
+		fmt.Printf("Name: %v \t ------- THC: %v\n", f.name, f.thc)
 		for c, q := range f.geo {
-			fmt.Printf("Country: %v ----- Qtde: %v\n\n", c, q)
+			fmt.Printf("Country: %v \t -------  Qtde: %v\n\n", c, q)
 		}
 	}
+	division()
 }
 
 // Function to create examples of geo (maps)
