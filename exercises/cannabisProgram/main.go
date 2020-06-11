@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	fmt.Println("Starting application...")
+	fmt.Printf("Starting application...\n\n\n")
 	time.Sleep(time.Second)
 }
 
@@ -43,13 +43,15 @@ func main() {
 	// its like routing, if get (just read, without parameters, just show)
 	// if it has arguments (POST), try to create a new flower
 	// need to implement PATCH and PUT "routes", for updating an existent flower
-	if len(args) == 5 {
+	switch len(args) {
+	case 0:
+		break
+	case 5:
 		createFlowerFromUser()
-	} else if len(args) > 0 || len(args) > 5 {
+	default:
 		fmt.Println("[type] [flower] [thc] [country] [qtde]")
 		return
 	}
-
 	// Printing the flowers for each type
 	cSativa.printFlowers()
 	fmt.Println("----------------------------")
@@ -101,7 +103,7 @@ func (c *cannabis) printFlowers() {
 }
 
 // Function to create examples of geo (maps)
-func createGeoEx(c string, q int) (map[string]int, error) {
+func createGeo(c string, q int) (map[string]int, error) {
 	if q < 0 {
 		return nil, errors.New("Number must be bigger or equal than 0") // create error and pass nil for map
 	}
@@ -113,12 +115,12 @@ func createGeoEx(c string, q int) (map[string]int, error) {
 
 func createExamples() {
 	// Create examples of geo
-	eX, err := createGeoEx("Brazil", 15)
+	eX, err := createGeo("Brazil", 15)
 	if err != nil { // check for errors
 		log.Fatalln(err)
 	}
 
-	eY, err := createGeoEx("France", 200)
+	eY, err := createGeo("France", 200)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -150,7 +152,7 @@ func createFlowerFromUser() {
 			log.Fatalln(err)
 			return
 		}
-		geo, err := createGeoEx(country, qtde)
+		geo, err := createGeo(country, qtde)
 		if err != nil {
 			log.Fatalln(err)
 			return
@@ -166,7 +168,7 @@ func createFlowerFromUser() {
 			log.Fatalln(err)
 			return
 		}
-		geo, err := createGeoEx(country, qtde)
+		geo, err := createGeo(country, qtde)
 		if err != nil {
 			log.Fatalln(err)
 			return
