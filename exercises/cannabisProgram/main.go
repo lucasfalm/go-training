@@ -31,6 +31,8 @@ func main() {
 	cSativa.printFlowers()
 	fmt.Println("----------------------------")
 	cIndica.printFlowers()
+
+	cSativa.Error()
 }
 
 // Method to add new flowers for cannabis type
@@ -60,4 +62,8 @@ func createGeoEx(c string, q int) map[string]int {
 	return map[string]int{
 		c: q, // country and qtde of this flower at this country
 	}
+}
+
+func (c *cannabis) Error() string {
+	return "Error -> EOF"
 }
