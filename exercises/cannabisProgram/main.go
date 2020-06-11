@@ -4,7 +4,15 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"os"
+	"strconv"
+	"time"
 )
+
+func init() {
+	fmt.Println("Starting application...")
+	time.Sleep(time.Second)
+}
 
 type (
 	// Define flowers struct
@@ -20,23 +28,24 @@ type (
 	}
 )
 
-func main() {
+var (
+	args = os.Args[1:]
 	// Create new types of cannabis using struct type
-	cSativa, cIndica := cannabis{name: "Sativa"}, cannabis{name: "Indica"}
+	cSativa = cannabis{name: "Sativa"}
+	cIndica = cannabis{name: "Indica"}
+)
 
-	// Create examples of geo
-	eX, err := createGeoEx("Brazil", -5)
-	if err != nil { // check for errors
-		log.Fatalln(err)
-	}
+func main() {
+	// create flowers examples
+	createExamples()
 
-	eY, err := createGeoEx("France", 200)
-	if err != nil {
-		log.Fatalln(err)
+	// check if user input any new flower
+	if len(args) == 5 {
+		createFlowerFromUser()
+	} else if len(args) > 0 || len(args) > 5 {
+		fmt.Println("[type] [flower] [thc] [country] [qtde]")
+		return
 	}
-	// Add new sativa and indicas flowers
-	(&cSativa).updateFlower("Gorilla Haze", 27, eX) // go automatic use cSativa pointer instead the copy of objects itself (&cSativa) OR cSativa
-	cIndica.updateFlower("Notherland", 22, eY)
 
 	// Printing the flowers for each type
 	cSativa.printFlowers()
@@ -45,14 +54,36 @@ func main() {
 }
 
 // Method to add new flowers for cannabis type
-func (c *cannabis) updateFlower(n string, thc int, g map[string]int) {
+func (c *cannabis) updateFlower(n string, thc int, g map[string]int) error {
+	var flag bool
+
 	nF := flowers{
 		name: n,
 		thc:  thc,
 		geo:  make(map[string]int), // Initializing map
 	}
-	nF.geo = g                        // Give a value to the map
-	c.flowers = append(c.flowers, nF) // Insert every info into flower
+	nF.geo = g // Give a value to the map
+
+	// check if flowers exists
+	flag = c.checkFlowers(n)
+
+	if flag == false {
+		c.flowers = append(c.flowers, nF)
+	} else {
+		return errors.New("Flower alreay exists")
+	}
+	return nil // no errors, everything if fine to go
+}
+
+func (c *cannabis) checkFlowers(fName string) bool {
+	for _, f := range c.flowers {
+		if f.name != fName {
+			continue
+		} else {
+			return true // if flower exists update flag to true
+		}
+	}
+	return false
 }
 
 // Method to print all flowers of Cannabis
@@ -75,4 +106,71 @@ func createGeoEx(c string, q int) (map[string]int, error) {
 	return map[string]int{
 		c: q, // country and qtde of this flower at this country
 	}, nil // error
+}
+
+func createExamples() {
+	// Create examples of geo
+	eX, err := createGeoEx("Brazil", 15)
+	if err != nil { // check for errors
+		log.Fatalln(err)
+	}
+
+	eY, err := createGeoEx("France", 200)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	// Add new sativa and indicas flowers
+	err = (&cSativa).updateFlower("Gorilla Haze", 27, eX) // go automatic use cSativa pointer instead the copy of objects itself (&cSativa) OR cSativa
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	err = cIndica.updateFlower("Notherland", 22, eY)
+	if err != nil {
+		log.Fatalln(err)
+	}
+}
+func createFlowerFromUser() {
+	cType, flower, country, q := args[0], args[1], args[3], args[4]
+
+	thc, err := strconv.Atoi(args[2])
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	switch cType {
+	case "Sativa":
+		qtde, err := strconv.Atoi(q)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+		geo, err := createGeoEx(country, qtde)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+		err = cSativa.updateFlower(flower, thc, geo)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+	case "Indica":
+		qtde, err := strconv.Atoi(q)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+		geo, err := createGeoEx(country, qtde)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+		err = cIndica.updateFlower(flower, thc, geo)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+	}
 }
