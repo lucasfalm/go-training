@@ -40,6 +40,9 @@ func main() {
 	createExamples()
 
 	// check if user input any new flower
+	// its like routing, if get (just read, without parameters, just show)
+	// if it has arguments (POST), try to create a new flower
+	// need to implement PATCH and PUT "routes", for updating an existent flower
 	if len(args) == 5 {
 		createFlowerFromUser()
 	} else if len(args) > 0 || len(args) > 5 {
@@ -140,6 +143,7 @@ func createFlowerFromUser() {
 	}
 
 	switch cType {
+	// could be a search into db for all *cannabis types
 	case "Sativa":
 		qtde, err := strconv.Atoi(q)
 		if err != nil {
@@ -172,5 +176,8 @@ func createFlowerFromUser() {
 			log.Fatalln(err)
 			return
 		}
+	default:
+		// if type alreay doest exists, its create
+		// create code
 	}
 }
