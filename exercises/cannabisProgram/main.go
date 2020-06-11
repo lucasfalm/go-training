@@ -30,6 +30,10 @@ type (
 		name    string
 		flowers []flowers
 	}
+
+	flowerCollection interface {
+		printFlowers()
+	}
 )
 
 var (
@@ -38,6 +42,7 @@ var (
 	cSativa  = cannabis{name: "Sativa"}
 	cIndica  = cannabis{name: "Indica"}
 	division = func() { fmt.Println(strings.Repeat("-", 50)) }
+	fc       []flowerCollection
 )
 
 func main() {
@@ -54,11 +59,16 @@ func main() {
 		fmt.Println("[type] [flower] [thc] [country] [qtde]")
 		return
 	}
+
+	// insert flowers into interface
+	fc = append(fc, &cSativa, &cIndica)
+
 	// Printing the flowers for each type
 	fmt.Println("C A N N A B I S:")
 	division()
-	cSativa.printFlowers()
-	cIndica.printFlowers()
+	for _, f := range fc {
+		f.printFlowers()
+	}
 }
 
 // Method to add new flowers for cannabis type
@@ -182,5 +192,6 @@ func createFlowerFromUser() {
 	default:
 		// if type alreay exists, it is create
 		// implement logic
+		// fc = append(fc, newType) for insert in menu
 	}
 }
