@@ -15,7 +15,7 @@ func f() {
 	}()
 	fmt.Println("Calling g.")
 	g(0)
-	fmt.Println("Returned normally from g.")
+	fmt.Println("Returned normally from g.") // its never called
 }
 
 func g(i int) {

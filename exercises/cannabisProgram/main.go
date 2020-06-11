@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+	"log"
+)
 
 type (
 	// Define flowers struct
@@ -21,8 +25,15 @@ func main() {
 	cSativa, cIndica := cannabis{name: "Sativa"}, cannabis{name: "Indica"}
 
 	// Create examples of geo
-	eX, eY := createGeoEx("France", 200), createGeoEx("Brazil", 2500)
+	eX, err := createGeoEx("Brazil", -5)
+	if err != nil { // check for errors
+		log.Fatalln(err)
+	}
 
+	eY, err := createGeoEx("France", 200)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	// Add new sativa and indicas flowers
 	(&cSativa).updateFlower("Gorilla Haze", 27, eX) // go automatic use cSativa pointer instead the copy of objects itself (&cSativa) OR cSativa
 	cIndica.updateFlower("Notherland", 22, eY)
@@ -31,8 +42,6 @@ func main() {
 	cSativa.printFlowers()
 	fmt.Println("----------------------------")
 	cIndica.printFlowers()
-
-	cSativa.Error()
 }
 
 // Method to add new flowers for cannabis type
@@ -58,12 +67,12 @@ func (c *cannabis) printFlowers() {
 }
 
 // Function to create examples of geo (maps)
-func createGeoEx(c string, q int) map[string]int {
+func createGeoEx(c string, q int) (map[string]int, error) {
+	if q < 0 {
+		return nil, errors.New("Number must be bigger or equal than 0") // create error and pass nil for map
+	}
+
 	return map[string]int{
 		c: q, // country and qtde of this flower at this country
-	}
-}
-
-func (c *cannabis) Error() string {
-	return "Error -> EOF"
+	}, nil // error
 }
