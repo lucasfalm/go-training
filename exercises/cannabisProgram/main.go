@@ -117,9 +117,9 @@ func (c *cannabis) checkFlowers(fName string) bool {
 func (c *cannabis) printFlowers() {
 	fmt.Printf("\nThe %s flowers are:\n", c.name)
 	for _, f := range c.flowers {
-		fmt.Printf("Name: %v \t ------- THC: %v\n", f.name, f.thc)
+		fmt.Printf("Name: %v \t ------- \tTHC: %v\n", f.name, f.thc)
 		for c, q := range f.geo {
-			fmt.Printf("Country: %v \t -------  Qtde: %v\n\n", c, q)
+			fmt.Printf("Country: %v \t ------- \tQtde: %v\n\n", c, q)
 		}
 	}
 	division()
