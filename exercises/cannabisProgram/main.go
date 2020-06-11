@@ -61,7 +61,7 @@ func main() {
 	}
 
 	// insert flowers into interface
-	fc = append(fc, &cSativa, &cIndica)
+	fc = append(fc, &cSativa, &cIndica) // pass pointer because who implements printFlower() is a pointer to *cannabis
 
 	// Printing the flowers for each type
 	fmt.Println("C A N N A B I S:")
