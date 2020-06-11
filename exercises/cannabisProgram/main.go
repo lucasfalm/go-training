@@ -12,6 +12,9 @@ import (
 func init() {
 	fmt.Printf("Starting application...\n\n\n")
 	time.Sleep(time.Second)
+
+	// create flowers examples
+	createExamples()
 }
 
 type (
@@ -36,9 +39,6 @@ var (
 )
 
 func main() {
-	// create flowers examples
-	createExamples()
-
 	// check if user input any new flower
 	// its like routing, if get (just read, without parameters, just show)
 	// if it has arguments (POST), try to create a new flower
