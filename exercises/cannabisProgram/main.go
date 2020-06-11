@@ -115,25 +115,14 @@ func createGeo(c string, q int) (map[string]int, error) {
 
 func createExamples() {
 	// Create examples of geo
-	eX, err := createGeo("Brazil", 15)
-	if err != nil { // check for errors
-		log.Fatalln(err)
-	}
+	eX, _ := createGeo("Brazil", 15) // ignoring the errors because its just an example
+	eY, _ := createGeo("France", 200)
 
-	eY, err := createGeo("France", 200)
-	if err != nil {
-		log.Fatalln(err)
-	}
 	// Add new sativa and indicas flowers
-	err = (&cSativa).updateFlower("Gorilla Haze", 27, eX) // go automatic use cSativa pointer instead the copy of objects itself (&cSativa) OR cSativa
-	if err != nil {
-		log.Fatalln(err)
-	}
+	_ = (&cSativa).updateFlower("Gorilla Haze", 27, eX) // go automatic use cSativa pointer instead the copy of objects itself (&cSativa) OR cSativa
 
-	err = cIndica.updateFlower("Notherland", 22, eY)
-	if err != nil {
-		log.Fatalln(err)
-	}
+	_ = cIndica.updateFlower("Notherland", 22, eY) // ignoring the err
+
 }
 func createFlowerFromUser() {
 	cType, flower, country, q := args[0], args[1], args[3], args[4]
@@ -152,11 +141,7 @@ func createFlowerFromUser() {
 			log.Fatalln(err)
 			return
 		}
-		geo, err := createGeo(country, qtde)
-		if err != nil {
-			log.Fatalln(err)
-			return
-		}
+		geo, _ := createGeo(country, qtde) // ignoring the error because at conversion I've already check the err
 		err = cSativa.updateFlower(flower, thc, geo)
 		if err != nil {
 			log.Fatalln(err)
@@ -168,11 +153,7 @@ func createFlowerFromUser() {
 			log.Fatalln(err)
 			return
 		}
-		geo, err := createGeo(country, qtde)
-		if err != nil {
-			log.Fatalln(err)
-			return
-		}
+		geo, _ := createGeo(country, qtde)
 		err = cIndica.updateFlower(flower, thc, geo)
 		if err != nil {
 			log.Fatalln(err)
