@@ -30,7 +30,7 @@ type (
 		name    string
 		flowers []flowers
 	}
-
+	// Define collection of flowers to access values
 	flowerCollection interface {
 		printFlowers()
 	}
@@ -38,11 +38,16 @@ type (
 
 var (
 	args = os.Args[1:]
+
 	// Create new types of cannabis using struct type
-	cSativa  = cannabis{name: "Sativa"}
-	cIndica  = cannabis{name: "Indica"}
+	cSativa = cannabis{name: "Sativa"}
+	cIndica = cannabis{name: "Indica"}
+
+	// anonymous func for division line
 	division = func() { fmt.Println(strings.Repeat("-", 50)) }
-	fc       []flowerCollection
+
+	// collection of flowers
+	fc []flowerCollection
 )
 
 func main() {
@@ -60,11 +65,11 @@ func main() {
 		return
 	}
 
-	// insert flowers into interface
+	// insert flowers in the interface
 	fc = append(fc, &cSativa, &cIndica) // pass pointer because who implements printFlower() is a pointer to *cannabis
 
 	// Printing the flowers for each type
-	fmt.Println("C A N N A B I S:")
+	fmt.Printf("\t\t C A N N A B I S:\n")
 	division()
 	for _, f := range fc {
 		f.printFlowers()
@@ -143,6 +148,7 @@ func createExamples() {
 
 }
 func createFlowerFromUser() {
+	// get input from user (or request)
 	cType, flower, country, q := args[0], args[1], args[3], args[4]
 
 	thc, err := strconv.Atoi(args[2])
@@ -151,8 +157,9 @@ func createFlowerFromUser() {
 		return
 	}
 
+	// could be a search in the db for all *cannabis types
+	// need to implement some logic to clear out this
 	switch cType {
-	// could be a search into db for all *cannabis types
 	case "Sativa":
 		qtde, err := strconv.Atoi(q)
 		if err != nil {
