@@ -177,7 +177,7 @@ func createFlowerFromUser() {
 			return
 		}
 	default:
-		// if type alreay doest exists, its create
-		// create code
+		// if type alreay exists, it is create
+		// implement logic
 	}
 }
