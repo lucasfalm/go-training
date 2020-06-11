@@ -65,6 +65,10 @@ func main() {
 func (c *cannabis) updateFlower(n string, thc int, g map[string]int) error {
 	var flag bool
 
+	if thc <= 0 {
+		return errors.New("THC must be bigger or equal than 0")
+	}
+
 	nF := flowers{
 		name: n,
 		thc:  thc,
@@ -109,7 +113,7 @@ func (c *cannabis) printFlowers() {
 // Function to create examples of geo (maps)
 func createGeo(c string, q int) (map[string]int, error) {
 	if q < 0 {
-		return nil, errors.New("Number must be bigger or equal than 0") // create error and pass nil for map
+		return nil, errors.New("Quantity must be bigger or equal than 0") // create error and pass nil for map
 	}
 
 	return map[string]int{
@@ -145,7 +149,13 @@ func createFlowerFromUser() {
 			log.Fatalln(err)
 			return
 		}
-		geo, _ := createGeo(country, qtde) // ignoring the error because at conversion I've already check the err
+
+		geo, err := createGeo(country, qtde)
+		if err != nil { // check if number is negative
+			log.Fatalln(err)
+			return
+		}
+
 		err = cSativa.updateFlower(flower, thc, geo)
 		if err != nil {
 			log.Fatalln(err)
@@ -157,7 +167,13 @@ func createFlowerFromUser() {
 			log.Fatalln(err)
 			return
 		}
-		geo, _ := createGeo(country, qtde)
+
+		geo, err := createGeo(country, qtde)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+
 		err = cIndica.updateFlower(flower, thc, geo)
 		if err != nil {
 			log.Fatalln(err)
