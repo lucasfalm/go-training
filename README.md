@@ -17,3 +17,8 @@ Goroutines https://golangvedu.wordpress.com/2017/03/23/golang-concurrency-part-i
 Unity tests
 
 https://blog.learngoprogramming.com/how-to-mock-in-your-go-golang-tests-b9eee7d7c266
+
+### Go coverage analysis
+
+go test -coverprofile c.out                                                                                     ✭ master
+go tool cover -html=c.out   
