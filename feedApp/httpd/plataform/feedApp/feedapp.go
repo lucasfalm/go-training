@@ -1,8 +1,8 @@
 package feedapp
 
 type Item struct {
-	Title sttring `json:"title"`
-	Post  sttring `json:"post"`
+	Title string `json:"title"`
+	Post  string `json:"post"`
 }
 
 type Repo struct {
