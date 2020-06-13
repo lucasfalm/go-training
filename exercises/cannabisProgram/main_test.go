@@ -38,17 +38,13 @@ func TestUpdateFlower(t *testing.T) {
 			}
 
 			err := f.mockCannabis.updateFlower("Test", 35, eX)
-			if !f.expectError {
-				if err != nil {
-					t.Fatal("an error was not expected, but occurred")
-				}
+			if !f.expectError && err != nil {
+				t.Fatal("an error was not expected, but occurred")
 			}
 
 			err = f.mockCannabis.updateFlower("Test", -35, eX)
-			if f.expectError {
-				if err == nil {
-					t.Fatal("an error was expected, but not occurred")
-				}
+			if f.expectError && err == nil {
+				t.Fatal("an error was expected, but not occurred")
 			}
 		},
 		)
