@@ -35,11 +35,28 @@ func CreatePersonEndpoint(response http.ResponseWriter, request *http.Request) {
 
 }
 
-// GetPeopleEndpoint to get all people
+// GetPersonEndpoint to get all people
+func GetPersonEndpoint(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("content-type", "application/json")
+	params := mux.Vars(request)
+	id, _ := primitive.ObjectIDFromHex(params["id"])
+	var person Person
+	collection := client.Database("peopleproject").Collection("people")
+	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
+	err := collection.FindOne(ctx, Person{ID: id}).Decode(&person)
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		response.Write([]byte(`{ "message": "` + err.Error() + `" }`))
+		return
+	}
+	json.NewEncoder(response).Encode(person)
+}
+
+// GetPeopleEndpoint to get a specific person
 func GetPeopleEndpoint(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("content-type", "application/json")
 	var people []Person
-	collection := client.Database("thepolyglotdeveloper").Collection("people")
+	collection := client.Database("peopleproject").Collection("people")
 	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
 	cursor, err := collection.Find(ctx, bson.M{})
 	if err != nil {
@@ -75,7 +92,7 @@ func main() {
 	// routes
 	router.HandleFunc("/person", CreatePersonEndpoint).Methods("POST")
 	router.HandleFunc("/people", GetPeopleEndpoint).Methods("GET")
-
+	router.HandleFunc("/person/{id}", GetPersonEndpoint).Methods("GET")
 	// port
 	http.ListenAndServe(":8080", router)
 }
