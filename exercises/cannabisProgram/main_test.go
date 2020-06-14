@@ -30,6 +30,7 @@ func TestUpdateFlower(t *testing.T) {
 	}
 
 	for index, f := range table {
+		// t.Run is subtesting
 		t.Run(fmt.Sprintf("%v-%v", index, f.testName), func(t *testing.T) {
 			f.setup(t)
 
