@@ -37,5 +37,7 @@ func main() {
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	client, _ := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
 	router := mux.NewRouter()
+
+	router.HandleFunc("/person", CreatePersonEndpoint).Methods("POST")
 	http.ListenAndServe(":12345", router)
 }
