@@ -3,36 +3,51 @@ package main
 import (
 	"fmt"
 	"os"
-	"strconv"
+)
+
+var (
+	flag    bool
+	unique  string
+	args    = os.Args[1:]
+	numbers = make(map[int]string)
+	uniques []string
 )
 
 func main() {
-	var (
-		args    = os.Args[1:]
-		numbers []int
-		uniques []int
-	)
-
 	if len(args) >= 1 {
-		for _, n := range args {
-			nm, _ := strconv.Atoi(n)
-			numbers = append(numbers, nm)
-		}
-	}
-	//trying to check if the number is already in uniques, if not true so append into it, but fails :(
-loop:
-	for _, m := range numbers {
-		uniques = append(uniques, m)
-		for _, v := range uniques {
-			if m == v {
-				continue loop
-			} else {
-				uniques = append(uniques, m)
-				continue loop
+		flag = false
+		for i, value := range args {
+			numbers[i] = value
+
+			if len(uniques) > 0 {
+				for _, number := range uniques {
+					if number == value {
+						flag = true
+					}
+				}
+			}
+			if flag == false {
+				uniques = append(uniques, value)
 			}
 		}
+
+	} else {
+		fmt.Println("Write some numbers!")
+		return
 	}
 
-	fmt.Println(numbers)
-	fmt.Println(uniques)
+	fmt.Println("All numbers:")
+	for i := 0; i <= len(numbers); i++ {
+		fmt.Println(numbers[i])
+	}
+	fmt.Printf("Size: %v\n", len(numbers))
+
+	fmt.Println("--------------------")
+
+	fmt.Println("All unique numbers:")
+
+	for _, unique := range uniques {
+		fmt.Println(unique)
+	}
+	fmt.Printf("Size: %v\n", len(uniques))
 }
