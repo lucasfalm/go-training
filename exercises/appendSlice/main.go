@@ -15,8 +15,8 @@ var (
 
 func main() {
 	if len(args) >= 1 {
-		flag = false
 		for i, value := range args {
+			flag = false
 			numbers[i] = value
 
 			if len(uniques) > 0 {
@@ -30,7 +30,6 @@ func main() {
 				uniques = append(uniques, value)
 			}
 		}
-
 	} else {
 		fmt.Println("Write some numbers!")
 		return
