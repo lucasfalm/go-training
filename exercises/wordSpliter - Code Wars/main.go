@@ -12,33 +12,34 @@ func main() {
 		fmt.Printf("the word '%v', is: %v\n", w, words)
 	}
 }
+
 func Solution(str string) []string {
-	var groups []string
-	f := 2
+	var wordGroups []string
+	rangeValues := 2
 
-	for i := 0; i <= len(str); i += 2 {
-		if i == len(str) {
+	for index := 0; index <= len(str); index += 2 {
+		if index == len(str) {
 			break
 		}
 
-		var w string
+		var formedWord string
 
-		if len(str) < f {
-			f -= 1
+		if len(str) < rangeValues {
+			rangeValues -= 1
 		}
-		w = str[i:f]
+		formedWord = str[index:rangeValues]
 
-		if w == "" {
+		if formedWord == "" {
 			break
 		}
 
-		if len(w) < 2 {
-			w = w + "_"
+		if len(formedWord) < 2 {
+			formedWord = formedWord + "_"
 		}
 
-		groups = append(groups, w)
-		f += 2
+		wordGroups = append(wordGroups, formedWord)
+		rangeValues += 2
 	}
 
-	return groups
+	return wordGroups
 }
