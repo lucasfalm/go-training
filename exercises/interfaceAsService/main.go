@@ -6,6 +6,8 @@ import (
 
 type dog struct{}
 
+type cat struct{}
+
 var (
 	DogService animalInterface = &dog{} // intancie a variable type animalInterface to export from package
 )
