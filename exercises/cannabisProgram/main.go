@@ -14,19 +14,19 @@ func init() {
 	fmt.Printf("Starting application...\n\n\n")
 	time.Sleep(time.Second)
 
-	// create flower examples
+	// create flowers examples
 	createExamples()
 }
 
 type (
-	flower struct {
+	flowers struct {
 		name   string
 		thc    int
 		origin map[string]int
 	}
 	cannabis struct {
-		name   string
-		flower []flower
+		name    string
+		flowers []flowers
 	}
 	flowerCollection interface {
 		showAllFlowers()
@@ -48,7 +48,7 @@ func main() {
 	case 5:
 		createFlowerFromUser()
 	default:
-		fmt.Println("[type] [flower] [thc] [country] [qtde]")
+		fmt.Println("[type] [flowers] [thc] [country] [qtde]")
 		return
 	}
 
@@ -61,7 +61,7 @@ func main() {
 	}
 }
 
-// Method to add new flower for cannabis type
+// Method to add new flowers for cannabis type
 func (c *cannabis) updateFlower(n string, thc int, origin map[string]int) error {
 	var flag bool
 
@@ -69,7 +69,7 @@ func (c *cannabis) updateFlower(n string, thc int, origin map[string]int) error 
 		return errors.New("THC must be bigger or equal than 0")
 	}
 
-	newFlower := flower{
+	newFlower := flowers{
 		name:   n,
 		thc:    thc,
 		origin: make(map[string]int),
@@ -77,7 +77,7 @@ func (c *cannabis) updateFlower(n string, thc int, origin map[string]int) error 
 	newFlower.origin = origin
 
 	if flag = c.flowerExists(n); !flag {
-		c.flower = append(c.flower, newFlower)
+		c.flowers = append(c.flowers, newFlower)
 	} else {
 		return errors.New("Flower alreay exists")
 	}
@@ -85,20 +85,20 @@ func (c *cannabis) updateFlower(n string, thc int, origin map[string]int) error 
 	return nil // no errors, everything if fine to go
 }
 
-func (c *cannabis) flowerExists(fName string) bool {
-	for _, f := range c.flower {
-		if f.name != fName {
+func (c *cannabis) flowerExists(flowerName string) bool {
+	for _, f := range c.flowers {
+		if f.name != flowerName {
 			continue
 		} else {
-			return true // if flower exists update flag to true
+			return true // if flowers exists update flag to true
 		}
 	}
 	return false
 }
 
 func (c *cannabis) showAllFlowers() {
-	fmt.Printf("\nThe %s flower are:\n", c.name)
-	for _, f := range c.flower {
+	fmt.Printf("\nThe %s flowers are:\n", c.name)
+	for _, f := range c.flowers {
 		fmt.Printf("Name: %v \t ------- \tTHC: %v\n", f.name, f.thc)
 		for cannabis, qtde := range f.origin {
 			fmt.Printf("Country: %v \t ------- \tQtde: %v\n\n", cannabis, qtde)
@@ -114,7 +114,7 @@ func createGeo(c string, q int) (map[string]int, error) {
 	}
 
 	return map[string]int{
-		c: q, // country and qtde of this flower at this country
+		c: q, // country and qtde of this flowers at this country
 	}, nil // error
 }
 
@@ -123,7 +123,7 @@ func createExamples() {
 	eX, _ := createGeo("Brazil", 15) // ignoring the errors because its just an example
 	eY, _ := createGeo("France", 200)
 
-	// Add new sativa and indicas flower
+	// Add new sativa and indicas flowers
 	_ = (&cSativa).updateFlower("Gorilla Haze", 27, eX) // go automatic use cSativa pointer instead the copy of objects itself (&cSativa) OR cSativa
 
 	_ = cIndica.updateFlower("Notherland", 22, eY) // ignoring the err
@@ -131,7 +131,7 @@ func createExamples() {
 }
 func createFlowerFromUser() {
 	// get input from user (or request)
-	cType, flower, country, q := args[0], args[1], args[3], args[4]
+	cType, flowers, country, q := args[0], args[1], args[3], args[4]
 
 	thc, err := strconv.Atoi(args[2])
 	if err != nil {
@@ -155,7 +155,7 @@ func createFlowerFromUser() {
 			return
 		}
 
-		err = cSativa.updateFlower(flower, thc, origin)
+		err = cSativa.updateFlower(flowers, thc, origin)
 		if err != nil {
 			log.Fatalln(err)
 			return
@@ -173,7 +173,7 @@ func createFlowerFromUser() {
 			return
 		}
 
-		err = cIndica.updateFlower(flower, thc, origin)
+		err = cIndica.updateFlower(flowers, thc, origin)
 		if err != nil {
 			log.Fatalln(err)
 			return
