@@ -14,47 +14,34 @@ func init() {
 	fmt.Printf("Starting application...\n\n\n")
 	time.Sleep(time.Second)
 
-	// create flowers examples
+	// create flower examples
 	createExamples()
 }
 
 type (
-	// Define flowers struct
-	flowers struct {
-		name string
-		thc  int
-		geo  map[string]int // declare a map inside the struct
+	flower struct {
+		name   string
+		thc    int
+		origin map[string]int
 	}
-	// Define cannabis struct
 	cannabis struct {
-		name    string
-		flowers []flowers
+		name   string
+		flower []flower
 	}
-	// Define collection of flowers to access values
 	flowerCollection interface {
 		showAllFlowers()
 	}
 )
 
 var (
-	args = os.Args[1:]
-
-	// Create new types of cannabis using struct type
-	cSativa = cannabis{name: "Sativa"}
-	cIndica = cannabis{name: "Indica"}
-
-	// anonymous func for divisionLine line
-	divisionLine = func() { fmt.Println(strings.Repeat("-", 50)) }
-
-	// collection of flowers
-	fc []flowerCollection
+	cSativa           = cannabis{name: "Sativa"}
+	cIndica           = cannabis{name: "Indica"}
+	flowersCollection []flowerCollection
+	args              = os.Args[1:]
+	divisionLine      = func() { fmt.Println(strings.Repeat("-", 50)) }
 )
 
 func main() {
-	// check if user input any new flower
-	// its like routing, if get (just read, without parameters, just show)
-	// if it has arguments (POST), try to create a new flower
-	// need to implement PATCH and PUT "routes", for updating an existent flower
 	switch len(args) {
 	case 0:
 		break
@@ -65,45 +52,41 @@ func main() {
 		return
 	}
 
-	// insert flowers in the interface
-	fc = append(fc, &cSativa, &cIndica) // pass pointer because who implements printFlower() is a pointer to *cannabis
+	flowersCollection = append(flowersCollection, &cSativa, &cIndica) // pass pointer because who implements printFlower() is a pointer to *cannabis
 
-	// Printing the flowers for each type
 	fmt.Printf("\t\t C A N N A B I S:\n")
 	divisionLine()
-	for _, f := range fc {
-		f.showAllFlowers()
+	for _, cannabis := range flowersCollection {
+		cannabis.showAllFlowers()
 	}
 }
 
-// Method to add new flowers for cannabis type
-func (c *cannabis) updateFlower(n string, thc int, g map[string]int) error {
+// Method to add new flower for cannabis type
+func (c *cannabis) updateFlower(n string, thc int, origin map[string]int) error {
 	var flag bool
 
 	if thc <= 0 {
 		return errors.New("THC must be bigger or equal than 0")
 	}
 
-	newFlower := flowers{
-		name: n,
-		thc:  thc,
-		geo:  make(map[string]int), // Initializing map
+	newFlower := flower{
+		name:   n,
+		thc:    thc,
+		origin: make(map[string]int),
 	}
-	newFlower.geo = g // Give a value to the map
+	newFlower.origin = origin
 
-	// check if flowers exists
-	flag = c.checkFlowers(n)
-
-	if !flag {
-		c.flowers = append(c.flowers, newFlower)
+	if flag = c.flowerExists(n); !flag {
+		c.flower = append(c.flower, newFlower)
 	} else {
 		return errors.New("Flower alreay exists")
 	}
+
 	return nil // no errors, everything if fine to go
 }
 
-func (c *cannabis) checkFlowers(fName string) bool {
-	for _, f := range c.flowers {
+func (c *cannabis) flowerExists(fName string) bool {
+	for _, f := range c.flower {
 		if f.name != fName {
 			continue
 		} else {
@@ -114,17 +97,17 @@ func (c *cannabis) checkFlowers(fName string) bool {
 }
 
 func (c *cannabis) showAllFlowers() {
-	fmt.Printf("\nThe %s flowers are:\n", c.name)
-	for _, f := range c.flowers {
+	fmt.Printf("\nThe %s flower are:\n", c.name)
+	for _, f := range c.flower {
 		fmt.Printf("Name: %v \t ------- \tTHC: %v\n", f.name, f.thc)
-		for cannabis, qtde := range f.geo {
+		for cannabis, qtde := range f.origin {
 			fmt.Printf("Country: %v \t ------- \tQtde: %v\n\n", cannabis, qtde)
 		}
 	}
 	divisionLine()
 }
 
-// Function to create examples of geo (maps)
+// Function to create examples of origin (maps)
 func createGeo(c string, q int) (map[string]int, error) {
 	if q < 0 {
 		return nil, errors.New("Quantity must be bigger or equal than 0") // create error and pass nil for map
@@ -136,11 +119,11 @@ func createGeo(c string, q int) (map[string]int, error) {
 }
 
 func createExamples() {
-	// Create examples of geo
+	// Create examples of origin
 	eX, _ := createGeo("Brazil", 15) // ignoring the errors because its just an example
 	eY, _ := createGeo("France", 200)
 
-	// Add new sativa and indicas flowers
+	// Add new sativa and indicas flower
 	_ = (&cSativa).updateFlower("Gorilla Haze", 27, eX) // go automatic use cSativa pointer instead the copy of objects itself (&cSativa) OR cSativa
 
 	_ = cIndica.updateFlower("Notherland", 22, eY) // ignoring the err
@@ -166,13 +149,13 @@ func createFlowerFromUser() {
 			return
 		}
 
-		geo, err := createGeo(country, qtde)
+		origin, err := createGeo(country, qtde)
 		if err != nil { // check if number is negative
 			log.Fatalln(err)
 			return
 		}
 
-		err = cSativa.updateFlower(flower, thc, geo)
+		err = cSativa.updateFlower(flower, thc, origin)
 		if err != nil {
 			log.Fatalln(err)
 			return
@@ -184,13 +167,13 @@ func createFlowerFromUser() {
 			return
 		}
 
-		geo, err := createGeo(country, qtde)
+		origin, err := createGeo(country, qtde)
 		if err != nil {
 			log.Fatalln(err)
 			return
 		}
 
-		err = cIndica.updateFlower(flower, thc, geo)
+		err = cIndica.updateFlower(flower, thc, origin)
 		if err != nil {
 			log.Fatalln(err)
 			return
@@ -198,6 +181,6 @@ func createFlowerFromUser() {
 	default:
 		// if type alreay exists, it is create
 		// implement logic
-		// fc = append(fc, newType) for insert in menu
+		// flowersCollection = append(flowersCollection, newType) for insert in menu
 	}
 }
