@@ -32,7 +32,7 @@ type (
 	}
 	// Define collection of flowers to access values
 	flowerCollection interface {
-		printFlowers()
+		showAllFlowers()
 	}
 )
 
@@ -72,7 +72,7 @@ func main() {
 	fmt.Printf("\t\t C A N N A B I S:\n")
 	divisionLine()
 	for _, f := range fc {
-		f.printFlowers()
+		f.showAllFlowers()
 	}
 }
 
@@ -94,7 +94,7 @@ func (c *cannabis) updateFlower(n string, thc int, g map[string]int) error {
 	// check if flowers exists
 	flag = c.checkFlowers(n)
 
-	if flag == false {
+	if !flag {
 		c.flowers = append(c.flowers, newFlower)
 	} else {
 		return errors.New("Flower alreay exists")
@@ -113,13 +113,12 @@ func (c *cannabis) checkFlowers(fName string) bool {
 	return false
 }
 
-// Method to print all flowers of Cannabis
-func (c *cannabis) printFlowers() {
+func (c *cannabis) showAllFlowers() {
 	fmt.Printf("\nThe %s flowers are:\n", c.name)
 	for _, f := range c.flowers {
 		fmt.Printf("Name: %v \t ------- \tTHC: %v\n", f.name, f.thc)
-		for c, q := range f.geo {
-			fmt.Printf("Country: %v \t ------- \tQtde: %v\n\n", c, q)
+		for cannabis, qtde := range f.geo {
+			fmt.Printf("Country: %v \t ------- \tQtde: %v\n\n", cannabis, qtde)
 		}
 	}
 	divisionLine()
