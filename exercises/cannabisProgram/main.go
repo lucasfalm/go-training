@@ -125,7 +125,7 @@ func createExamples() {
 
 }
 func createFlowerFromUser() {
-	cType, flowers, country, q := args[0], args[1], args[3], args[4]
+	cannabisType, flowers, country, q, typeExists := args[0], args[1], args[3], args[4], false
 
 	thc, err := strconv.Atoi(args[2])
 	if err != nil {
@@ -133,38 +133,40 @@ func createFlowerFromUser() {
 		return
 	}
 
-	switch cType {
+	avaliableTypes := []string{
+		"Sativa",
+		"Indica",
+	}
+
+	for _, existentType := range avaliableTypes {
+		if cannabisType == existentType {
+			typeExists = true
+			break
+		}
+
+		avaliableTypes = append(avaliableTypes, cannabisType)
+	}
+
+	qtde, err := strconv.Atoi(q)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	origin, err := createOrigin(country, qtde)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	switch cannabisType {
 	case "Sativa":
-		qtde, err := strconv.Atoi(q)
-		if err != nil {
+		if err = cSativa.updateFlower(flowers, thc, origin); err != nil {
 			log.Fatalln(err)
 			return
 		}
 
-		origin, err := createOrigin(country, qtde)
-		if err != nil {
-			log.Fatalln(err)
-			return
-		}
-
-		err = cSativa.updateFlower(flowers, thc, origin)
-		if err != nil {
-			log.Fatalln(err)
-			return
-		}
 	case "Indica":
-		qtde, err := strconv.Atoi(q)
-		if err != nil {
-			log.Fatalln(err)
-			return
-		}
-
-		origin, err := createOrigin(country, qtde)
-		if err != nil {
-			log.Fatalln(err)
-			return
-		}
-
 		err = cIndica.updateFlower(flowers, thc, origin)
 		if err != nil {
 			log.Fatalln(err)
