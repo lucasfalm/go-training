@@ -108,7 +108,7 @@ func (c *cannabis) showAllFlowers() {
 }
 
 // Function to create examples of origin (maps)
-func createGeo(c string, q int) (map[string]int, error) {
+func createOrigin(c string, q int) (map[string]int, error) {
 	if q < 0 {
 		return nil, errors.New("Quantity must be bigger or equal than 0") // create error and pass nil for map
 	}
@@ -120,8 +120,8 @@ func createGeo(c string, q int) (map[string]int, error) {
 
 func createExamples() {
 	// Create examples of origin
-	eX, _ := createGeo("Brazil", 15) // ignoring the errors because its just an example
-	eY, _ := createGeo("France", 200)
+	eX, _ := createOrigin("Brazil", 15) // ignoring the errors because its just an example
+	eY, _ := createOrigin("France", 200)
 
 	// Add new sativa and indicas flowers
 	_ = (&cSativa).updateFlower("Gorilla Haze", 27, eX) // go automatic use cSativa pointer instead the copy of objects itself (&cSativa) OR cSativa
@@ -149,7 +149,7 @@ func createFlowerFromUser() {
 			return
 		}
 
-		origin, err := createGeo(country, qtde)
+		origin, err := createOrigin(country, qtde)
 		if err != nil { // check if number is negative
 			log.Fatalln(err)
 			return
@@ -167,7 +167,7 @@ func createFlowerFromUser() {
 			return
 		}
 
-		origin, err := createGeo(country, qtde)
+		origin, err := createOrigin(country, qtde)
 		if err != nil {
 			log.Fatalln(err)
 			return
