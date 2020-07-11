@@ -43,8 +43,8 @@ var (
 	cSativa = cannabis{name: "Sativa"}
 	cIndica = cannabis{name: "Indica"}
 
-	// anonymous func for division line
-	division = func() { fmt.Println(strings.Repeat("-", 50)) }
+	// anonymous func for divisionLine line
+	divisionLine = func() { fmt.Println(strings.Repeat("-", 50)) }
 
 	// collection of flowers
 	fc []flowerCollection
@@ -70,7 +70,7 @@ func main() {
 
 	// Printing the flowers for each type
 	fmt.Printf("\t\t C A N N A B I S:\n")
-	division()
+	divisionLine()
 	for _, f := range fc {
 		f.printFlowers()
 	}
@@ -84,18 +84,18 @@ func (c *cannabis) updateFlower(n string, thc int, g map[string]int) error {
 		return errors.New("THC must be bigger or equal than 0")
 	}
 
-	nF := flowers{
+	newFlower := flowers{
 		name: n,
 		thc:  thc,
 		geo:  make(map[string]int), // Initializing map
 	}
-	nF.geo = g // Give a value to the map
+	newFlower.geo = g // Give a value to the map
 
 	// check if flowers exists
 	flag = c.checkFlowers(n)
 
 	if flag == false {
-		c.flowers = append(c.flowers, nF)
+		c.flowers = append(c.flowers, newFlower)
 	} else {
 		return errors.New("Flower alreay exists")
 	}
@@ -122,7 +122,7 @@ func (c *cannabis) printFlowers() {
 			fmt.Printf("Country: %v \t ------- \tQtde: %v\n\n", c, q)
 		}
 	}
-	division()
+	divisionLine()
 }
 
 // Function to create examples of geo (maps)
