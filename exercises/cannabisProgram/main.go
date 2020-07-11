@@ -14,7 +14,6 @@ func init() {
 	fmt.Printf("Starting application...\n\n\n")
 	time.Sleep(time.Second)
 
-	// create flowers examples
 	createExamples()
 }
 
@@ -52,7 +51,7 @@ func main() {
 		return
 	}
 
-	flowersCollection = append(flowersCollection, &cSativa, &cIndica) // pass pointer because who implements printFlower() is a pointer to *cannabis
+	flowersCollection = append(flowersCollection, &cSativa, &cIndica)
 
 	fmt.Printf("\t\t C A N N A B I S:\n")
 	divisionLine()
@@ -61,7 +60,6 @@ func main() {
 	}
 }
 
-// Method to add new flowers for cannabis type
 func (c *cannabis) updateFlower(n string, thc int, origin map[string]int) error {
 	var flag bool
 
@@ -82,7 +80,7 @@ func (c *cannabis) updateFlower(n string, thc int, origin map[string]int) error 
 		return errors.New("Flower alreay exists")
 	}
 
-	return nil // no errors, everything if fine to go
+	return nil
 }
 
 func (c *cannabis) flowerExists(flowerName string) bool {
@@ -90,7 +88,7 @@ func (c *cannabis) flowerExists(flowerName string) bool {
 		if f.name != flowerName {
 			continue
 		} else {
-			return true // if flowers exists update flag to true
+			return true
 		}
 	}
 	return false
@@ -107,30 +105,26 @@ func (c *cannabis) showAllFlowers() {
 	divisionLine()
 }
 
-// Function to create examples of origin (maps)
 func createOrigin(c string, q int) (map[string]int, error) {
 	if q < 0 {
-		return nil, errors.New("Quantity must be bigger or equal than 0") // create error and pass nil for map
+		return nil, errors.New("Quantity must be bigger or equal than 0")
 	}
 
 	return map[string]int{
-		c: q, // country and qtde of this flowers at this country
-	}, nil // error
+		c: q,
+	}, nil
 }
 
 func createExamples() {
-	// Create examples of origin
-	eX, _ := createOrigin("Brazil", 15) // ignoring the errors because its just an example
+	eX, _ := createOrigin("Brazil", 15)
 	eY, _ := createOrigin("France", 200)
 
-	// Add new sativa and indicas flowers
-	_ = (&cSativa).updateFlower("Gorilla Haze", 27, eX) // go automatic use cSativa pointer instead the copy of objects itself (&cSativa) OR cSativa
+	_ = (&cSativa).updateFlower("Gorilla Haze", 27, eX)
 
-	_ = cIndica.updateFlower("Notherland", 22, eY) // ignoring the err
+	_ = cIndica.updateFlower("Notherland", 22, eY)
 
 }
 func createFlowerFromUser() {
-	// get input from user (or request)
 	cType, flowers, country, q := args[0], args[1], args[3], args[4]
 
 	thc, err := strconv.Atoi(args[2])
@@ -139,8 +133,6 @@ func createFlowerFromUser() {
 		return
 	}
 
-	// could be a search in the db for all *cannabis types
-	// need to implement some logic to clear out this
 	switch cType {
 	case "Sativa":
 		qtde, err := strconv.Atoi(q)
@@ -150,7 +142,7 @@ func createFlowerFromUser() {
 		}
 
 		origin, err := createOrigin(country, qtde)
-		if err != nil { // check if number is negative
+		if err != nil {
 			log.Fatalln(err)
 			return
 		}
@@ -179,8 +171,6 @@ func createFlowerFromUser() {
 			return
 		}
 	default:
-		// if type alreay exists, it is create
-		// implement logic
-		// flowersCollection = append(flowersCollection, newType) for insert in menu
+		// TODO
 	}
 }
