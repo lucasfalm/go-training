@@ -137,6 +137,7 @@ func createFlowerFromUser() {
 		"Sativa",
 		"Indica",
 	}
+	_ = typeExists
 
 	for _, existentType := range avaliableTypes {
 		if cannabisType == existentType {
