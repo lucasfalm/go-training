@@ -7,6 +7,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -38,6 +39,7 @@ var (
 	flowersCollection []flowerCollection
 	args              = os.Args[1:]
 	divisionLine      = func() { fmt.Println(strings.Repeat("-", 50)) }
+	wg                sync.WaitGroup
 )
 
 func main() {
@@ -45,7 +47,8 @@ func main() {
 	case 0:
 		break
 	case 5:
-		createFlowerFromUser()
+		wg.Add(1)
+		go createFlowerFromUser()
 	default:
 		fmt.Println("[type] [flowers] [thc] [country] [qtde]")
 		return
@@ -55,9 +58,13 @@ func main() {
 
 	fmt.Printf("\t\t C A N N A B I S:\n")
 	divisionLine()
+
+	wg.Wait()
+
 	for _, cannabis := range flowersCollection {
 		cannabis.showAllFlowers()
 	}
+
 }
 
 func (c *cannabis) updateFlower(n string, thc int, origin map[string]int) error {
@@ -125,6 +132,9 @@ func createExamples() {
 
 }
 func createFlowerFromUser() {
+	defer wg.Done()
+	time.Sleep(2 * time.Second)
+
 	cannabisType, flowers, country, q, typeExists := args[0], args[1], args[3], args[4], false
 
 	thc, err := strconv.Atoi(args[2])
