@@ -29,5 +29,4 @@ func main() {
 	wg.Wait() // wait for all goroutines end
 
 	fmt.Println("The final value of counter is:", counter)
-
 }
