@@ -54,7 +54,7 @@ func main() {
 		return
 	}
 
-	flowersCollection = append(flowersCollection, &cSativa, &cIndica)
+	prepareCollection(cSativa, cIndica)
 
 	fmt.Printf("\t\t C A N N A B I S:\n")
 	divisionLine()
@@ -88,6 +88,12 @@ func (c *cannabis) updateFlower(n string, thc int, origin map[string]int) error 
 	}
 
 	return nil
+}
+
+func prepareCollection(cs ...cannabis) {
+	for _, cannabis := range cs {
+		flowersCollection = append(flowersCollection, &cannabis)
+	}
 }
 
 func (c *cannabis) flowerExists(flowerName string) bool {
@@ -175,6 +181,6 @@ func createFlowerFromUser() {
 		}
 
 		cNewType.updateFlower(name, thc, origin)
-		flowersCollection = append(flowersCollection, &cNewType)
+		prepareCollection(cNewType)
 	}
 }
