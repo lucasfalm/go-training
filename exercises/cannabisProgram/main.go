@@ -131,31 +131,17 @@ func createExamples() {
 	_ = cIndica.updateFlower("Notherland", 22, eY)
 
 }
+
 func createFlowerFromUser() {
 	defer wg.Done()
 	time.Sleep(2 * time.Second)
 
-	cannabisType, flowers, country, q, typeExists := args[0], args[1], args[3], args[4], false
+	cannabisType, name, country, q := args[0], args[1], args[3], args[4]
 
 	thc, err := strconv.Atoi(args[2])
 	if err != nil {
 		log.Fatalln(err)
 		return
-	}
-
-	avaliableTypes := []string{
-		"Sativa",
-		"Indica",
-	}
-	_ = typeExists
-
-	for _, existentType := range avaliableTypes {
-		if cannabisType == existentType {
-			typeExists = true
-			break
-		}
-
-		avaliableTypes = append(avaliableTypes, cannabisType)
 	}
 
 	qtde, err := strconv.Atoi(q)
@@ -172,18 +158,23 @@ func createFlowerFromUser() {
 
 	switch cannabisType {
 	case "Sativa":
-		if err = cSativa.updateFlower(flowers, thc, origin); err != nil {
+		if err = cSativa.updateFlower(name, thc, origin); err != nil {
 			log.Fatalln(err)
 			return
 		}
 
 	case "Indica":
-		err = cIndica.updateFlower(flowers, thc, origin)
+		err = cIndica.updateFlower(name, thc, origin)
 		if err != nil {
 			log.Fatalln(err)
 			return
 		}
 	default:
-		// TODO
+		cNewType := cannabis{
+			name: cannabisType,
+		}
+
+		cNewType.updateFlower(name, thc, origin)
+		flowersCollection = append(flowersCollection, &cNewType)
 	}
 }
