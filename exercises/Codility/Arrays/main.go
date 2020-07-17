@@ -10,11 +10,12 @@ func main() {
 }
 
 func Solution(A []int, K int) []int {
+	result := []int{}
+
 	if len(A) == 0 {
-		return []int{}
+		return result
 	}
 
-	result := []int{}
 	start, end := 1, 0
 
 	for i := 1; i <= K; i++ {
