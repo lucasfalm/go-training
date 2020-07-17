@@ -1,18 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 func main() {
-	fmt.Println(Solution(10, 1000, 1000))
+	fmt.Println(Solution(10, 85, 30))
 }
 
 func Solution(X int, Y int, D int) int {
 	step := 0
 
 	if X < Y {
-		for result := X; result < Y; result += D {
-			step++
-		}
+		step = int(math.Round((float64(Y-X) / float64(D))))
 	} else {
 		step = 0
 	}
