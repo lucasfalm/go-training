@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	elements := []int{2, 3, 1, 5}
+	elements := []int{5}
 	fmt.Println("Solution: ", Solution(elements))
 }
 
@@ -15,7 +15,7 @@ func Solution(A []int) int {
 
 	if len(A) > 0 {
 		if len(A) == 1 {
-			return 1
+			return A[0] + 1
 		}
 		sort.Ints(A)
 		perfectCount, missingCount := 0, 0
@@ -33,7 +33,17 @@ func Solution(A []int) int {
 			missingCount += number
 		}
 
-		return perfectCount - missingCount
+		result := perfectCount - missingCount
+
+		if result == 0 {
+			if first[0] == 2 {
+				return 1
+			} else {
+				return last[0] + 1
+			}
+		}
+
+		return result
 
 	} else {
 		return 1
