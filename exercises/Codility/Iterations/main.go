@@ -19,17 +19,13 @@ func main() {
 func Solution(N int) int {
 	binary := strconv.FormatInt(int64(N), 2)
 	binaryArray := strings.Split(binary, "")
-	zerosCount, flag, maxZerosCount := 0, false, 0
+	zerosCount, maxZerosCount := 0, 0
 
 	for _, binaryNumber := range binaryArray {
 		if binaryNumber == "1" {
-			if !flag {
-				flag = true
-			}
 			if zerosCount > maxZerosCount {
 				maxZerosCount = zerosCount
 			}
-			flag = false
 			zerosCount = 0
 
 		} else {
