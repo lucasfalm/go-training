@@ -10,11 +10,15 @@ func main() {
 	fmt.Println("Solution: ", Solution(elements))
 }
 
+// Final analysis - 100% Big O(N) or O(N*log(N))
 func Solution(A []int) int {
 	perfect := []int{}
 
 	if len(A) > 0 {
 		if len(A) == 1 {
+			if A[0] == 2 {
+				return 1
+			}
 			return A[0] + 1
 		}
 		sort.Ints(A)
