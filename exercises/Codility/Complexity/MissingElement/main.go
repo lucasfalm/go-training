@@ -1,39 +1,41 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 func main() {
-	elements := []int{7}
+	elements := []int{2, 3, 1, 5}
 	fmt.Println("Solution: ", Solution(elements))
 }
 
 func Solution(A []int) int {
-	if len(A) >= 0 {
+	perfect := []int{}
+
+	if len(A) > 0 {
 		if len(A) == 1 {
-			return A[0] + 1
-		} else {
-			start, end, missing := A[:1], A[len(A)-1:], 0
-
-			for searchedNumber := start[0]; searchedNumber <= end[0]; searchedNumber++ {
-				found := false
-
-				for _, number := range A {
-					if number == searchedNumber {
-						found = true
-					}
-				}
-				if !found {
-					missing = searchedNumber
-				}
-
-				if missing == 0 {
-					missing = end[0] + 1
-				}
-			}
-
-			return missing
+			return 1
 		}
+		sort.Ints(A)
+		perfectCount, missingCount := 0, 0
+		first, last := A[:1], A[len(A)-1:]
+
+		for i := first[0]; i <= last[0]; i++ {
+			perfect = append(perfect, i)
+		}
+
+		for _, number := range perfect {
+			perfectCount += number
+		}
+
+		for _, number := range A {
+			missingCount += number
+		}
+
+		return perfectCount - missingCount
+
 	} else {
-		return 0
+		return 1
 	}
 }
