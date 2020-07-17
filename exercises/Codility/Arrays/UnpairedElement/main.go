@@ -15,7 +15,7 @@ func Solution(A []int) int {
 	}
 
 	for number, occurrences := range occurrencesMap {
-		if occurrences%2 != 0 {
+		if occurrences % 2 != 0 {
 			alone = number
 		}
 	}
