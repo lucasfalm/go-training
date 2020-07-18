@@ -7,7 +7,7 @@ func main() {
 
 	linkedSet.addLast(5)
 	linkedSet.addLast(6)
-	linkedSet.addLast(7)
+	linkedSet.removeLast()
 
 	fmt.Println(linkedSet)
 }
@@ -40,4 +40,20 @@ func (l *LinkedSet) addLast(value int) {
 	}
 
 	l.size++
+}
+
+func (l *LinkedSet) removeLast() {
+	previusNode := &Node{}
+	currentNode := l.root
+
+	for l.root.next != nil {
+		previusNode = currentNode
+
+		currentNode = currentNode.next
+	}
+	fmt.Println(currentNode)
+	previusNode.next = nil
+	l.size--
+
+	fmt.Println(currentNode)
 }
