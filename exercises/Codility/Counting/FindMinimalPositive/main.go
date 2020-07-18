@@ -6,16 +6,17 @@ import (
 )
 
 func main() {
-	elements := []int{1, 1, 2, 3, 4, 6, 7, 9}
+	elements := []int{-1, 2, 3, 4, 5, 6, 7, 1000}
 	fmt.Println("Solution: ", Solution(elements))
 }
 
+// 75% O(N) or O(N * log(N))
 func Solution(A []int) int {
 	totalSliceLenght, missing := len(A), 0
 
 	if totalSliceLenght >= 1 {
 		sort.Ints(A)
-		start, stop, perfectCount := A[0], A[len(A)-1:], make(map[int]bool)
+		start, stop := A[0], A[len(A)-1:]
 
 		if totalSliceLenght == 1 {
 			if start > 2 {
@@ -28,6 +29,10 @@ func Solution(A []int) int {
 		} else if totalSliceLenght == 2 {
 			if start > 1 && stop[0] > 1 {
 				return 1
+			} else if start < 0 && stop[0] < 0 {
+				return 1
+			} else if start < 0 && stop[0] > 1 {
+				return 1
 			} else {
 				return start + 1
 			}
@@ -39,25 +44,19 @@ func Solution(A []int) int {
 					return 1
 				}
 
-				for increment := start; increment <= stop[0]; increment++ {
-					perfectCount[increment] = false
-					if increment == 0 {
-						perfectCount[increment] = true
-					}
-				}
+				lastValue := 0
+				for _, v := range A {
+					beforeSet := lastValue
+					lastValue = v
 
-				for i := 0; i <= len(A)-1; i++ {
-					actualValue := A[i]
-
-					if _, found := perfectCount[actualValue]; found {
-						perfectCount[actualValue] = true
-					}
-				}
-
-				for value, _ := range perfectCount {
-					if !perfectCount[value] {
-						missing = value
-						break
+					if beforeSet-lastValue <= -2 {
+						if beforeSet+1 == 0 && lastValue != 1 {
+							return 1
+						} else if beforeSet+1 == 0 && lastValue == 1 {
+							continue
+						} else {
+							return beforeSet + 1
+						}
 					}
 				}
 			}
