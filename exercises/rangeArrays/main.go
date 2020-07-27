@@ -22,6 +22,7 @@ func main() {
 		"Book 4",
 	}
 
+	// Time complexity of Big O(n^2) time, and space O(n^2)
 	for i := range sBooks {
 		for y, v := range books {
 			if i == y {
