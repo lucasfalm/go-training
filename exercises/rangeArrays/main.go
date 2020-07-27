@@ -24,11 +24,9 @@ func main() {
 
 	// Time complexity of Big O(n) time, and space O(n) - refactored
 	for i := 0; i <= len(books); i++ {
-		sBooks[i] = books[i]
 		if sBooks[i] == books[i] {
 			sBooks[i] = books[i]
 		}
-
 		i++
 	}
 
