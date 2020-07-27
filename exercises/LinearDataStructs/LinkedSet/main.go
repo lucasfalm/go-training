@@ -22,6 +22,7 @@ type LinkedSet struct {
 	size int
 }
 
+// Big O(n) time and Big O(n) space
 func (l *LinkedSet) addLast(value int) {
 	node := &Node{
 		value: value,
@@ -42,6 +43,7 @@ func (l *LinkedSet) addLast(value int) {
 	l.size++
 }
 
+// Big O(n) time and Big O(n) space
 func (l *LinkedSet) removeLast() {
 	previusNode := &Node{}
 	currentNode := l.root
