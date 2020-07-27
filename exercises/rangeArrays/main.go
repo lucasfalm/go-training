@@ -22,15 +22,14 @@ func main() {
 		"Book 4",
 	}
 
-	// Time complexity of Big O(n^2) time, and space O(n^2)
-	for i := range sBooks {
-		for y, v := range books {
-			if i == y {
-				sBooks[i] = v
-			} else {
-				continue
-			}
+	// Time complexity of Big O(n) time, and space O(n) - refactored
+	for i := 0; i <= len(books); i++ {
+		sBooks[i] = books[i]
+		if sBooks[i] == books[i] {
+			sBooks[i] = books[i]
 		}
+
+		i++
 	}
 
 	fmt.Printf("Books: %v\n", books)
