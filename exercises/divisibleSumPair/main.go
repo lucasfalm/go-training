@@ -1,96 +1,98 @@
 package main
 
 import (
-    "bufio"
-    "fmt"
-    "io"
-    "os"
-    "strconv"
-    "strings"
+	"bufio"
+	"fmt"
+	"io"
+	"os"
+	"strconv"
+	"strings"
 )
+
 // https://www.hackerrank.com/challenges/divisible-sum-pairs/problem
 // Complete the divisibleSumPairs function below.
 func divisibleSumPairs(n int32, k int32, ar []int32) int32 {
-    pointer_one, pointer_two := 0, 1
-    result := 0
+	pointer_one, pointer_two := 0, 1
+	result := 0
+	ar_size := len(ar) - 1
+
 loop:
-    for pointer_one <= len(ar) - 1 {
-        actual_sum := ar[pointer_one] + ar[pointer_two]
-        fmt.Println(actual_sum)
+	for pointer_one <= ar_size {
+		actual_sum := ar[pointer_one] + ar[pointer_two]
 
-        if actual_sum % k == 0 && ar[pointer_two] != 0 && ar[pointer_one] != 0 {
-            result++
-            ar[pointer_two] = 0
-            ar[pointer_one] = 0
-            pointer_one++
-            pointer_two++
-        } else { 
-            pointer_two++
-            
-            if pointer_two > len(ar) - 1 && pointer_one < len(ar) - 1 {
-                pointer_one++
-                pointer_two = pointer_one + 1
-            } else if pointer_one <= len(ar) - 1 && pointer_two < len(ar) - 1 {
-                continue loop
-            } else {
-                break
-            }
-        }
-    }
+		if actual_sum%k == 0 && ar[pointer_two] != 0 && ar[pointer_one] != 0 {
+			ar[pointer_two] = 0
+			ar[pointer_one] = 0
 
-    return int32(result)
+			pointer_one++
+			pointer_two++
+			result++
+		} else {
+			pointer_two++
+
+			if pointer_two > ar_size && pointer_one < ar_size {
+				pointer_one++
+				pointer_two = pointer_one + 1
+			} else if pointer_one <= ar_size && pointer_two < ar_size {
+				continue loop
+			} else {
+				break
+			}
+		}
+	}
+
+	return int32(result)
 }
 
 func main() {
-    reader := bufio.NewReaderSize(os.Stdin, 1024 * 1024)
+	reader := bufio.NewReaderSize(os.Stdin, 1024*1024)
 
-    stdout, err := os.Create(os.Getenv("OUTPUT_PATH"))
-    checkError(err)
+	stdout, err := os.Create(os.Getenv("OUTPUT_PATH"))
+	checkError(err)
 
-    defer stdout.Close()
+	defer stdout.Close()
 
-    writer := bufio.NewWriterSize(stdout, 1024 * 1024)
+	writer := bufio.NewWriterSize(stdout, 1024*1024)
 
-    nk := strings.Split(readLine(reader), " ")
+	nk := strings.Split(readLine(reader), " ")
 
-    nTemp, err := strconv.ParseInt(nk[0], 10, 64)
-    checkError(err)
-    n := int32(nTemp)
+	nTemp, err := strconv.ParseInt(nk[0], 10, 64)
+	checkError(err)
+	n := int32(nTemp)
 
-    kTemp, err := strconv.ParseInt(nk[1], 10, 64)
-    checkError(err)
-    k := int32(kTemp)
+	kTemp, err := strconv.ParseInt(nk[1], 10, 64)
+	checkError(err)
+	k := int32(kTemp)
 
-    arTemp := strings.Split(readLine(reader), " ")
+	arTemp := strings.Split(readLine(reader), " ")
 
-    var ar []int32
+	var ar []int32
 
-    for i := 0; i < int(n); i++ {
-        arItemTemp, err := strconv.ParseInt(arTemp[i], 10, 64)
-        checkError(err)
-        arItem := int32(arItemTemp)
-        ar = append(ar, arItem)
-    }
+	for i := 0; i < int(n); i++ {
+		arItemTemp, err := strconv.ParseInt(arTemp[i], 10, 64)
+		checkError(err)
+		arItem := int32(arItemTemp)
+		ar = append(ar, arItem)
+	}
 
-    result := divisibleSumPairs(n, k, ar)
+	result := divisibleSumPairs(n, k, ar)
 
-    fmt.Fprintf(writer, "%d\n", result)
+	fmt.Fprintf(writer, "%d\n", result)
 
-    writer.Flush()
+	writer.Flush()
 }
 
 func readLine(reader *bufio.Reader) string {
-    str, _, err := reader.ReadLine()
-    if err == io.EOF {
-        return ""
-    }
+	str, _, err := reader.ReadLine()
+	if err == io.EOF {
+		return ""
+	}
 
-    return strings.TrimRight(string(str), "\r\n")
+	return strings.TrimRight(string(str), "\r\n")
 }
 
 func checkError(err error) {
-    if err != nil {
-        panic(err)
-    }
+	if err != nil {
+		panic(err)
+	}
 }
-
