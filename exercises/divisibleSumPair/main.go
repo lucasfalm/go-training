@@ -16,31 +16,25 @@ func divisibleSumPairs(n int32, k int32, ar []int32) int32 {
 	result := 0
 	arSize := len(ar) - 1
 
-loop:
 	for pointerOne <= arSize {
 		actualSum := ar[pointerOne] + ar[pointerTwo]
 
-		if actualSum%k == 0 && ar[pointerTwo] != 0 && ar[pointerOne] != 0 {
-			ar[pointerTwo] = 0
-			ar[pointerOne] = 0
-
-			pointerOne++
+		if actualSum%k == 0 {
 			pointerTwo++
 			result++
 		} else {
 			pointerTwo++
+		}
 
-			if pointerTwo > arSize && pointerOne < arSize {
-				pointerOne++
-				pointerTwo = pointerOne + 1
-			} else if pointerOne <= arSize && pointerTwo < arSize {
-				continue loop
-			} else {
-				break
-			}
+		if pointerTwo > arSize {
+			pointerOne++
+			pointerTwo = pointerOne + 1
+		}
+
+		if pointerOne >= arSize {
+			break
 		}
 	}
-
 	return int32(result)
 }
 
