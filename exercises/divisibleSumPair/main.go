@@ -12,9 +12,7 @@ import (
 // https://www.hackerrank.com/challenges/divisible-sum-pairs/problem
 // Complete the divisibleSumPairs function below.
 func divisibleSumPairs(n int32, k int32, ar []int32) int32 {
-	pointerOne, pointerTwo := 0, 1
-	result := 0
-	arSize := len(ar) - 1
+	pointerOne, pointerTwo, result, arSize := 0, 1, 0, len(ar)-1
 
 	for pointerOne <= arSize {
 		actualSum := ar[pointerOne] + ar[pointerTwo]
