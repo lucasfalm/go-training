@@ -1,24 +1,29 @@
-###  Studies of Go
+###  Studies in Go
 
-There are many folders, about one golang topic each.
+There are many folders, each one about one golang topic.
 
-Goplayground
+#### Some helpful links
 
-https://play.golang.org/
+Goplayground | https://play.golang.org/
 
-Godoc org
+Godoc org | https://golang.org/doc/
 
-https://golang.org/doc/
+Concurrency | https://golangvedu.wordpress.com/2017/03/23/golang-concurrency-part-i/
 
-Links
+How to Mock | https://blog.learngoprogramming.com/how-to-mock-in-your-go-golang-tests-b9eee7d7c266
 
-Goroutines https://golangvedu.wordpress.com/2017/03/23/golang-concurrency-part-i/
+How to Write Go Code | https://golang.org/doc/code.html
 
-Unity tests
+Golang Project Layout | https://github.com/golang-standards/project-layout
 
-https://blog.learngoprogramming.com/how-to-mock-in-your-go-golang-tests-b9eee7d7c266
+Learn Go With Tests | https://quii.gitbook.io/learn-go-with-tests/
+
+Code Review Comments Pratices | https://github.com/golang/go/wiki/CodeReviewComments
+
+Function As Field | https://www.geeksforgeeks.org/function-as-a-field-in-golang-structure/#:~:text=A%20structure%20or%20struct%20in,be%20represented%20as%20a%20struct.
 
 ### Go coverage analysis
 
-go test -coverprofile c.out                                                                                     ✭ master
-go tool cover -html=c.out   
+#### go test -coverage
+#### go test -coverprofile c.out
+#### go tool cover -html=c.out   
