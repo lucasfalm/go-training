@@ -14,7 +14,3 @@ func TestBubbleSort(t *testing.T) {
 		t.Errorf("got %d insted 9\n", dumbSlice[len(dumbSlice)-1])
 	}
 }
-
-func TestMain(t *testing.T) {
-
-}
