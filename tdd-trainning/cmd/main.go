@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /* Types of testes
 ---------------------------
 
@@ -51,9 +53,7 @@ Tear Down - clear
 */
 
 func main() {
-	something := saySomethingNow()
-
-	_ = something
+	fmt.Println("I'm watching you")
 }
 
 func saySomethingNow() string {
