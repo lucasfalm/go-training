@@ -20,6 +20,7 @@ Functional test between all (POST /new-user with json, and test the result)
 
 2) Integration tests -> test the integration (interaction) between all the components, not mocking the functions/methods, make sure all diferent layers, artefacts and components are all integrated well
 
+
 ---------------------------
 
 3) Functional Test -> is needed to start and run the application (make requests against the application and check the result), eg: test a POST request against the route, then check if the response is what we expect
@@ -53,7 +54,8 @@ Tear Down - clear
 */
 
 func main() {
-	fmt.Println("I'm watching you")
+	something := saySomethingNow()
+	fmt.Println(something)
 }
 
 func saySomethingNow() string {

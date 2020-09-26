@@ -11,6 +11,4 @@ func TestSaySomethingNow(t *testing.T) {
 	}
 }
 
-func TestMain(t *testing.T) {
-
-}
+func TestMain(t *testing.T) {}
