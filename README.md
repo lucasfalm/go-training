@@ -1,6 +1,8 @@
-###  Studies of Go
+###  Studies in Go
 
-There are many folders, about one golang topic each.
+There are many folders, each one about one golang topic.
+
+#### Some helpful links
 
 Goplayground | https://play.golang.org/
 
