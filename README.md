@@ -22,6 +22,6 @@ Function As Field | https://www.geeksforgeeks.org/function-as-a-field-in-golang-
 
 ### Go coverage analysis
 
-go test -coverage
-go test -coverprofile c.out                                                                                     ✭ master
-go tool cover -html=c.out   
+#### go test -coverage
+#### go test -coverprofile c.out
+#### go tool cover -html=c.out   
