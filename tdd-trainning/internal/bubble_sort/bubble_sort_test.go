@@ -7,6 +7,14 @@ func TestBubbleSort(t *testing.T) {
 	BubbleSort(dumbSlice)
 
 	if dumbSlice[0] != 0 {
-		t.Errorf("got %d insted 9\n", dumbSlice[0])
+		t.Errorf("got %d insted 0\n", dumbSlice[0])
 	}
+
+	if dumbSlice[len(dumbSlice)-1] != 9 {
+		t.Errorf("got %d insted 9\n", dumbSlice[len(dumbSlice)-1])
+	}
+}
+
+func TestMain(t *testing.T) {
+
 }
