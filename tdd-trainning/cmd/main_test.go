@@ -16,7 +16,7 @@ func TestSaySomethingNow(t *testing.T) {
 	}()
 
 	go func() {
-		time.Sleep(5 * time.Second)
+		time.Sleep(5 * time.Second) // if the saySomethingNow took more than 5 seconds, the test will fail (avoid eternal looping)
 		timeoutChan <- true
 	}()
 
