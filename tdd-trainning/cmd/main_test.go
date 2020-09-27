@@ -26,9 +26,9 @@ func TestSaySomethingNow(t *testing.T) {
 
 	if <-timeoutChan {
 		t.Error("say something took more than 5 seconds to run")
-
 	}
 	assert.True(t, <-timeoutChan)
+
 	assert.NotNil(t, result)
 	assert.Equal(t, expect, result)
 }
