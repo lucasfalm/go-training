@@ -1,10 +1,28 @@
 package main
 
-import "testing"
+import (
+	"testing"
+	"time"
+)
 
 func TestSaySomethingNow(t *testing.T) {
 	expect := "hey"
-	result := saySomethingNow()
+	timeoutChan := make(chan bool)
+	var result string
+
+	go func() {
+		result = saySomethingNow()
+		timeoutChan <- false
+	}()
+
+	go func() {
+		time.Sleep(5 * time.Second)
+		timeoutChan <- true
+	}()
+
+	if <-timeoutChan {
+		t.Error("say something took more than 5 seconds to run")
+	}
 
 	if expect != result {
 		t.Errorf("Something is wrong here x)")
