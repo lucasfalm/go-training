@@ -3,12 +3,16 @@ package main
 import (
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestSaySomethingNow(t *testing.T) {
-	expect := "hey"
-	timeoutChan := make(chan bool)
-	var result string
+	var (
+		expect      = "hey"
+		timeoutChan = make(chan bool)
+		result      string
+	)
 
 	go func() {
 		result = saySomethingNow()
@@ -22,11 +26,11 @@ func TestSaySomethingNow(t *testing.T) {
 
 	if <-timeoutChan {
 		t.Error("say something took more than 5 seconds to run")
-	}
 
-	if expect != result {
-		t.Errorf("Something is wrong here x)")
 	}
+	assert.True(t, <-timeoutChan)
+	assert.NotNil(t, result)
+	assert.Equal(t, expect, result)
 }
 
 /*
