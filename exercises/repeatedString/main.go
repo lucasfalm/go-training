@@ -25,7 +25,7 @@ func repeatedString(s string, n int64) int64 {
 		}
 	}
 
-	return int64(math.Round(float64(repeat) / (float64(len(ss))) * float64(n)))
+	return int64(math.Round(float64(repeat) / (float64(len(lettersSlice))) * float64(n)))
 }
 
 func main() {
