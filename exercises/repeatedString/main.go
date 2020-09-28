@@ -11,7 +11,12 @@ import (
 )
 
 // https://www.hackerrank.com/challenges/repeated-string/problem
-// Complete the repeatedString function below.
+/*
+	To correctly solve this problem it's needed to check whether or not
+	it's necessary to round the integer to up, or down. (0.7 or lower down, 0.8 or 0.9 up)
+
+	Using math.Round(up) or just casting into int64 (down)
+*/
 // Big O(n) time( where n is length of string) and Big O(n) space. 16/23 tests
 func repeatedString(s string, n int64) int64 {
 	var (
