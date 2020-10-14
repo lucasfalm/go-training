@@ -12,7 +12,7 @@ func main() {
 	r := gin.Default() // instance of gin, with middlwares
 
 	// create new route with context
-	//r.GET("/ping", handler.PingGet())
+	r.GET("/ping", handler.PingGet())
 	r.GET("/feedapp", handler.FeedAppGet(feed))
 	r.POST("/feedapp", handler.FeedAppPost(feed))
 

@@ -16,7 +16,7 @@ type feedAppPostRequest struct {
 func FeedAppPost(feed *feedapp.Repo) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestBody := feedAppPostRequest{}
-
+		
 		c.Bind(&requestBody)
 
 		c.JSON(http.StatusOK, map[string]string{

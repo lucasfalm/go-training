@@ -51,6 +51,9 @@ Execution - call the method
 Validation - check if the result is the same as expected
 Tear Down - clear
 
+---------------------------
+
+Each clausule return from a method or function in production code must have an test case
 */
 
 func main() {

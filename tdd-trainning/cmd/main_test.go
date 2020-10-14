@@ -34,10 +34,8 @@ func TestSaySomethingNow(t *testing.T) {
 }
 
 /*
-We use benchmark to validate which solution is more
-performatic
+	We use benchmark to validate which solution is more performatic
 */
-
 func BenchmarkSaySomethingNow(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		saySomethingNow()
