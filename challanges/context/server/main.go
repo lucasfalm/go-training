@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/flucas97/go-trainning/exercises/context/log"
+	"github.com/flucas97/go-trainning/challanges/context/log"
 )
 
 func main() {

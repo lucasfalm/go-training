@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/flucas97/exercises/comparation/calc"
+	"github.com/flucas97/go-trainning/challanges/comparation/calc"
 )
 
 func main() {

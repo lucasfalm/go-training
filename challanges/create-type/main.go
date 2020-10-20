@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/flucas97/exercises/createType/address"
+	"github.com/flucas97/go-trainning/challanges/create-type/address"
 )
 
 func main() {
