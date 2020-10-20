@@ -1,5 +1,11 @@
 package main
 
+import (
+	"fmt"
+	"os"
+	"strconv"
+)
+
 // https://www.hackerrank.com/challenges/drawing-book/problem
 // Big O(n) time and O(n) space
 func pageCount(n int32, p int32) int32 {
@@ -40,8 +46,24 @@ back:
 	}
 
 	if totalBack < totalFront {
+		fmt.Println("from back")
 		return totalBack
 	} else {
+		fmt.Println("from front")
 		return totalFront
+	}
+}
+
+func main() {
+	if len(os.Args) > 1 {
+		var (
+			totalPages, _   = strconv.Atoi(os.Args[1])
+			searchedPage, _ = strconv.Atoi(os.Args[2])
+		)
+
+		result := pageCount(int32(totalPages), int32(searchedPage))
+		fmt.Println(result)
+	} else {
+		fmt.Println("write pages and searched page")
 	}
 }
