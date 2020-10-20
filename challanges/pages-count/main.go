@@ -1,43 +1,48 @@
+package main
+
 // https://www.hackerrank.com/challenges/drawing-book/problem
+// Big O(n) time and O(n) space
 func pageCount(n int32, p int32) int32 {
-    if n - p >= -1 && n - p <= 1 {
-        return 0
-    }
+	var (
+		frontCount int32
+		backCount  = n
 
-    if p == 1 {
-        return 0
-    }
+		totalFront int32
+		totalBack  int32
 
-    var (
-        frontCount = int32(1)
-        backCount = n
-        totalFront int32
-        totalBack int32
-    )
-   
-    for frontCount < p {
-        if frontCount + 1 == p {
-            frontCount = p + 1
-            break
-        }
+		flag bool
+	)
 
-        totalFront++
-        frontCount += 2
-    }
-    
-    for backCount > p {
-        if backCount - 1 == p {
-            frontCount = p - 1
-            break
-        }
+front:
+	for frontCount < p {
+		if flag {
+			totalFront++
+			flag = false
+			frontCount++
 
-        totalBack++
-        backCount -= 2
-    }
+			continue front
+		}
+		frontCount++
+		flag = true
+	}
 
-    if totalBack < totalFront {
-        return totalBack
-    } else {
-        return totalFront
-    }
+back:
+	for backCount > p {
+		if flag {
+			totalBack++
+			flag = false
+			backCount--
+
+			continue back
+		}
+
+		backCount--
+		flag = true
+	}
+
+	if totalBack < totalFront {
+		return totalBack
+	} else {
+		return totalFront
+	}
 }
