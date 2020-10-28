@@ -5,6 +5,15 @@ import "fmt"
 func main() {
 	one, two, three := myfunc(1, 2, 3)
 	fmt.Println(one, two, three)
+
+	switch one {
+	case 1002:
+		fmt.Println("1002")
+		fallthrough
+	default:
+		fmt.Println("will also pass here")
+	}
+
 }
 
 func myfunc(a, b, c int) (one, two, three int) {
