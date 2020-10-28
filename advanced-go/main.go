@@ -16,9 +16,10 @@ func myfunc(a, b, c int) (one, two, three int) {
 	return // the returned values were defined explicity
 }
 
-func notafunc() *int {
-	number := 55
-	return &number
+func notafunc() (number *int) {
+	i := 55
+	number = &(i)
+	return
 }
 
 func changingValues(value *int, newValue int) {
