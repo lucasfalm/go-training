@@ -35,26 +35,11 @@ func main() {
 	c <- true
 
 	var (
-		subject = EventSubject{
-			Observers: sync.Map{},
-		}
+		subject = EventSubject{Observers: sync.Map{}}
 
-		observerOne = EventObserver{
-			ID:   1,
-			Time: time.Now(),
-		}
-
-		observerTwo = EventObserver{
-			ID:   2,
-			Time: time.Now(),
-		}
-
-		event = Event{
-			Data: DataSchema{
-				Title: "hey you",
-				Body:  "wanna have some fun?",
-			},
-		}
+		observerOne = EventObserver{ID: 1, Time: time.Now()}
+		observerTwo = EventObserver{ID: 2, Time: time.Now()}
+		event       = Event{Data: DataSchema{Title: "hey you", Body: "wanna have some fun?"}}
 	)
 
 	subject.AddListener(&observerOne)
