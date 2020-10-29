@@ -8,15 +8,6 @@ import (
 	"github.com/flucas97/go-trainning/advanced-go/observer"
 )
 
-/*
-observer
-
-Subject - sync.map{} - add,remove listener, notify
-Observer - notifyCallback
-
-
-*/
-
 func main() {
 	one, two, three := myfunc(1, 2, 3)
 	fmt.Println(one, two, three)

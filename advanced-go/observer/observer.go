@@ -6,6 +6,13 @@ import (
 	"time"
 )
 
+/*
+Observer Design Pattern
+------------------------
+Subject - sync.map{} - add,remove listener, notify
+Observer - notifyCallback
+*/
+
 type (
 	Event struct {
 		Data DataSchema
