@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"sync"
 	"time"
 
@@ -53,7 +54,7 @@ func myfunc(a, b, c int) (one, two, three int) {
 }
 
 func notafunc() (number *int) {
-	i := 55
+	i := rand.Intn(100*int(time.Millisecond)) / 100000
 	number = &i
 	return
 }
