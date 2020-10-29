@@ -44,7 +44,7 @@ type (
 )
 
 func (eo *EventObserver) NotifyCallback(e Event) {
-	fmt.Printf("ok with event %v", e.Data)
+	fmt.Printf("[Event Observer ID: %v] receive title:'%v' and body: %v \n", eo.ID, e.Data.Title, e.Data.Body)
 }
 
 func (es *EventSubject) AddListener(observer Observer) {
