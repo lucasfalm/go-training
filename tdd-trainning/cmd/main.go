@@ -16,6 +16,7 @@ Unit test on the dto and dao
 Integration test between controller and service
 Functional test between all (POST /new-user with json, and test the result)
 
+
 ---------------------------
 
 2) Integration tests -> test the integration (interaction) between all the components, not mocking the functions/methods, make sure all diferent layers, artefacts and components are all integrated well
