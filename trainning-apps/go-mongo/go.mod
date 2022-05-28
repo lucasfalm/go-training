@@ -1,4 +1,4 @@
-module github.com/flucas97/go-trainning/mongo-go
+module github.com/lucasfalm/go-training/mongo-go
 
 go 1.14
 

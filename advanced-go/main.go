@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/flucas97/go-trainning/advanced-go/observer"
+	"github.com/lucasfalm/go-training/advanced-go/observer"
 )
 
 var (
