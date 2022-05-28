@@ -1,81 +1,80 @@
 package main
 
 import (
-    "bufio"
-    "fmt"
-    "io"
-    "os"
-    "strconv"
-    "strings"
+	"bufio"
+	"fmt"
+	"io"
+	"os"
+	"strconv"
+	"strings"
 )
 
 // https://www.hackerrank.com/challenges/bon-appetit/problem
 // Complete the bonAppetit function below.
 // Big O(n) time and O(1) space complexity
 func bonAppetit(bill []int32, k int32, b int32) {
-    counter, total_bill, brian_total, anna_total := 0, 0, 0, 0 
-    
-    for counter <= len(bill) - 1 {
-        total_bill += int(bill[counter])
-        counter += 1
-    }
+	counter, totalBill, brian_total, anna_total := 0, 0, 0, 0
 
-    anna_total = int(bill[k])
-    brian_total = (total_bill - anna_total) / 2
-    overcharged := (brian_total + int(b) + anna_total) - total_bill
+	for counter <= len(bill)-1 {
+		totalBill += int(bill[counter])
+		counter += 1
+	}
 
-    switch overcharged { 
-        case 0:
-            fmt.Println("Bon Appetit")
-            return
-        default:
-            fmt.Println(overcharged)
-    }
+	anna_total = int(bill[k])
+	brian_total = (totalBill - anna_total) / 2
+	overcharged := (brian_total + int(b) + anna_total) - totalBill
+
+	switch overcharged {
+	case 0:
+		fmt.Println("Bon Appetit")
+		return
+	default:
+		fmt.Println(overcharged)
+	}
 }
 
 func main() {
-    reader := bufio.NewReaderSize(os.Stdin, 16 * 1024 * 1024)
+	reader := bufio.NewReaderSize(os.Stdin, 16*1024*1024)
 
-    nk := strings.Split(strings.TrimSpace(readLine(reader)), " ")
+	nk := strings.Split(strings.TrimSpace(readLine(reader)), " ")
 
-    nTemp, err := strconv.ParseInt(nk[0], 10, 64)
-    checkError(err)
-    n := int32(nTemp)
+	nTemp, err := strconv.ParseInt(nk[0], 10, 64)
+	checkError(err)
+	n := int32(nTemp)
 
-    kTemp, err := strconv.ParseInt(nk[1], 10, 64)
-    checkError(err)
-    k := int32(kTemp)
+	kTemp, err := strconv.ParseInt(nk[1], 10, 64)
+	checkError(err)
+	k := int32(kTemp)
 
-    billTemp := strings.Split(strings.TrimSpace(readLine(reader)), " ")
+	billTemp := strings.Split(strings.TrimSpace(readLine(reader)), " ")
 
-    var bill []int32
+	var bill []int32
 
-    for i := 0; i < int(n); i++ {
-        billItemTemp, err := strconv.ParseInt(billTemp[i], 10, 64)
-        checkError(err)
-        billItem := int32(billItemTemp)
-        bill = append(bill, billItem)
-    }
+	for i := 0; i < int(n); i++ {
+		billItemTemp, err := strconv.ParseInt(billTemp[i], 10, 64)
+		checkError(err)
+		billItem := int32(billItemTemp)
+		bill = append(bill, billItem)
+	}
 
-    bTemp, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
-    checkError(err)
-    b := int32(bTemp)
+	bTemp, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
+	checkError(err)
+	b := int32(bTemp)
 
-    bonAppetit(bill, k, b)
+	bonAppetit(bill, k, b)
 }
 
 func readLine(reader *bufio.Reader) string {
-    str, _, err := reader.ReadLine()
-    if err == io.EOF {
-        return ""
-    }
+	str, _, err := reader.ReadLine()
+	if err == io.EOF {
+		return ""
+	}
 
-    return strings.TrimRight(string(str), "\r\n")
+	return strings.TrimRight(string(str), "\r\n")
 }
 
 func checkError(err error) {
-    if err != nil {
-        panic(err)
-    }
+	if err != nil {
+		panic(err)
+	}
 }
-
