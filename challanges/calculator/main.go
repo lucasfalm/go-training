@@ -39,121 +39,239 @@ type Expression struct {
 	firstNumber float64
 	lastNumber  float64
 	result      float64
+	startIndex  int
+	endIndex    int
 }
 
 func searchExpressions(css []string) (exps []Expression, ok bool) {
 	ok = true
 
-	holdMult := false
-	holdDiv := false
+	actionsIndex := map[string]int{}
+	var calculated = false
 
-	actionIndex := 0
-	lastNumberIndex := 0
+	for i, a := range css {
+		if i == 0 {
+			continue
+		}
 
-	for {
-		var action string
-		action, actionIndex, ok = defineAction(actionIndex, lastNumberIndex, css)
-		if !ok {
-			if len(exps) > 0 {
-				return exps, ok
+		if _, okk := validActions[a]; okk {
+			if _, okkk := actionsIndex[a]; !okkk {
+				actionsIndex[a] = i
 			}
+		}
+	}
 
-			r, _ := strconv.ParseFloat(strings.Join(css, ""), 64)
-			exps = append(exps, Expression{result: r})
-			ok = false
-
+restart:
+	if _, okk := actionsIndex["*"]; okk {
+		actionIndex := actionsIndex["*"]
+		exps, ok = search(css, actionIndex, exps, "*")
+		if !ok {
 			return exps, ok
 		}
 
-		if action == "*" || action == "/" {
-			if action == "*" {
-				holdMult = true
-			}
+		delete(actionsIndex, "*")
+		calculated = true
+		goto restart
+	}
 
-			if action == "/" {
-				holdDiv = true
-			}
-
-			if len(exps) != 0 {
-				actionIndex++
-				lastNumberIndex = actionIndex
-				action = ""
-			}
+	if _, okk := actionsIndex["/"]; okk {
+		actionIndex := actionsIndex["/"]
+		exps, ok = search(css, actionIndex, exps, "/")
+		if !ok {
+			return exps, ok
 		}
 
+		delete(actionsIndex, "/")
+		calculated = true
+		goto restart
+	}
+
+	if _, o := actionsIndex["-"]; o {
+		if _, ko := actionsIndex["+"]; ko {
+			if actionsIndex["+"] < actionsIndex["-"] {
+				actionIndex := actionsIndex["+"]
+				exps, ok = search(css, actionIndex, exps, "+")
+				if !ok {
+					return exps, ok
+				}
+
+				delete(actionsIndex, "+")
+				delete(actionsIndex, "-")
+				calculated = true
+				goto restart
+			}
+
+			if actionsIndex["-"] > actionsIndex["+"] {
+				actionIndex := actionsIndex["-"]
+				exps, ok = search(css, actionIndex, exps, "-")
+				if !ok {
+					return exps, ok
+				}
+
+				delete(actionsIndex, "+")
+				delete(actionsIndex, "-")
+				calculated = true
+				goto restart
+			}
+		}
+	}
+
+	if _, ok := actionsIndex["-"]; ok {
+		actionIndex := actionsIndex["-"]
+		exps, ok = search(css, actionIndex, exps, "-")
+		if !ok {
+			return exps, ok
+		}
+
+		delete(actionsIndex, "-")
+		calculated = true
+		goto restart
+	}
+
+	if _, ok := actionsIndex["+"]; ok {
+		actionIndex := actionsIndex["+"]
+		exps, ok = search(css, actionIndex, exps, "+")
+		if !ok {
+			return exps, ok
+		}
+
+		delete(actionsIndex, "+")
+		calculated = true
+		goto restart
+	}
+
+	if len(actionsIndex) == 0 && !calculated {
+		r, _ := strconv.ParseFloat(strings.Join(css, ""), 64)
+		exps = append(exps, Expression{
+			result: r,
+		})
+
+		return exps, false
+	}
+
+	lastIndexCalculated := 0
+	lastExpression := Expression{}
+
+	for _, exp := range exps {
+		if exp.endIndex > lastIndexCalculated {
+			lastIndexCalculated = exp.endIndex
+			lastExpression = exp
+		}
+
+		if exp.endIndex == lastIndexCalculated {
+			if exp.result > lastExpression.result {
+				lastExpression = exp
+			}
+		}
+	}
+
+	if len(css[lastIndexCalculated:]) > 0 {
+		fn := lastExpression.result
+		var ln float64
+		var lni int
+		var okk bool
+
+		ln, lni, okk = extractLastNumber(css, lastIndexCalculated)
+		if !okk {
+			return exps, false
+		}
+
+		exps = append(exps, Expression{
+			firstNumber: fn,
+			lastNumber:  ln,
+			result:      execAction(fn, ln, "+"),
+			endIndex:    lni,
+		})
+	}
+
+	return
+}
+
+func search(css []string, actionIndex int, exps []Expression, action string) ([]Expression, bool) {
+	for {
 		var fn float64
 		var fni int
 
-		if len(exps) == 0 {
-			if holdMult || holdDiv {
-				if lastNumberIndex == 0 {
-					fn, fni = extractFirstNumber(css, actionIndex, false)
-				}
+		var fnAlreadyChecked = false
+		var lnAlreadyChecked = false
 
-				if lastNumberIndex > 0 {
-					fn, fni = extractFirstNumber(css, actionIndex, true)
-				}
+		for _, e := range exps {
+			if e.startIndex == actionIndex+1 {
+				lnAlreadyChecked = true
+				break
 			}
 
-			if !holdMult && !holdDiv {
-				fn, fni = extractFirstNumber(css, actionIndex, false)
+			if e.startIndex == actionIndex-1 {
+				lnAlreadyChecked = true
+				break
 			}
 		}
 
-		if len(exps) > 0 && !holdMult {
-			fn = exps[len(exps)-1].result
+		if !fnAlreadyChecked {
+			if len(exps) == 0 {
+				fn, fni = extractFirstNumber(css, actionIndex)
+			}
+
+			if len(exps) > 0 && exps[len(exps)-1].startIndex < actionIndex {
+				fn = exps[len(exps)-1].result
+				fni = exps[len(exps)-1].startIndex
+			}
+
+			if len(exps) > 0 && exps[len(exps)-1].startIndex > actionIndex {
+				fn, fni = extractFirstNumber(css, actionIndex)
+			}
+		}
+
+		if fnAlreadyChecked {
+			for _, e := range exps {
+				if e.startIndex == actionIndex-1 {
+					fn = e.result
+				}
+			}
 		}
 
 		var ln float64
 		var lni int
 
-		var okk = false
-
-		if fni > 0 {
-			ln, lni, okk = extractLastNumber(css, fni)
-			if !okk {
-				return exps, false
+		if lnAlreadyChecked {
+			for _, e := range exps {
+				if e.startIndex == actionIndex+1 {
+					ln = e.result
+					lni = e.endIndex
+				}
 			}
 		}
 
-		if fni == 0 {
+		if !lnAlreadyChecked {
+			var okk = false
+
 			ln, lni, okk = extractLastNumber(css, actionIndex)
 			if !okk {
 				return exps, false
 			}
 		}
 
-		if fni == lni && action == "" {
-			if holdMult {
-				exps = append(exps, Expression{
-					result: execAction(fn, ln, "*"),
-				})
-			}
-
-			if holdDiv {
-				exps = append(exps, Expression{
-					result: execAction(fn, ln, "/"),
-				})
-			}
-
-			break
-		}
-
-		if action == "" {
-			action = "+"
-		}
-
-		lastNumberIndex = lni
-
 		exps = append(exps, Expression{
 			firstNumber: fn,
 			lastNumber:  ln,
 			action:      action,
 			result:      execAction(fn, ln, action),
+			startIndex:  fni,
+			endIndex:    lni,
 		})
-	}
 
-	return
+		if lni >= len(css)-1 {
+			return exps, false
+		}
+
+		for _, s := range css[lni+1:] {
+			if s != " " && s != "(" && s != ")" {
+				return exps, true
+			}
+		}
+
+		return exps, false
+	}
 }
 
 func defineAction(lastActionIndex int, lastNumberIndex int, css []string) (action string, actionIndex int, ok bool) {
@@ -211,44 +329,49 @@ func searchAction(ss []string, start int) (a string, i int, ok bool) {
 	return
 }
 
-func extractFirstNumber(ss []string, actionIndex int, holdMult bool) (fn float64, fni int) {
-	if holdMult {
-		fns := []string{}
-		fnss := []string{}
+func extractFirstNumber(ss []string, actionIndex int) (fn float64, fni int) {
+	fnActions := []string{}
+	fNumbers := []string{}
 
-		var ln = false
-
-		for i, s := range ss[actionIndex:] {
-			if val, okk := validActions[s]; okk {
-				if ln {
-					break
+	i := actionIndex - 1
+	for {
+		if i >= 0 {
+			s := ss[i]
+			if _, okk := validActions[s]; okk {
+				if len(fnActions) == 0 {
+					fnActions = append(fnActions, s)
 				}
 
-				fnss = append(fnss, val)
-				continue
+				if len(fnActions) > 0 {
+					break
+				}
 			}
 
 			if _, okk := validNumbers[s]; okk {
-				fns = append(fns, s)
-				ln = true
-				fni = i + actionIndex
-				continue
+				fNumbers = append(fNumbers, s)
+				fni = i
 			}
 
-			if s == "." {
-				fns = append(fns, s)
-			}
+			i--
 		}
 
-		fs := extractSymbol(fnss)
-		fns = append([]string{fs}, fns...)
-		fn, _ = strconv.ParseFloat(strings.Join(fns, ""), 64)
+		if i < 0 {
+			break
+		}
 	}
 
-	if !holdMult {
-		fn, _ = strconv.ParseFloat(strings.Join(gsub(ss[0:actionIndex]), ""), 64)
+	revFnumbers := []string{}
+	for i := len(fNumbers) - 1; i >= 0; i-- {
+		revFnumbers = append(revFnumbers, fNumbers[i])
 	}
 
+	symbolSignal := extractSymbol(fnActions)
+
+	if symbolSignal != "" {
+		revFnumbers = append([]string{symbolSignal}, revFnumbers...)
+	}
+
+	fn, _ = strconv.ParseFloat(strings.Join(revFnumbers, ""), 64)
 	return
 }
 
