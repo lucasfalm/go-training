@@ -34,21 +34,23 @@ func Calc(expression string) (result float64) {
 	return exps[len(exps)-1].result
 }
 
-type expression struct {
+type Expression struct {
 	action      string
 	firstNumber float64
 	lastNumber  float64
 	result      float64
 }
 
-func searchExpressions(css []string) (exps []expression, ok bool) {
+func searchExpressions(css []string) (exps []Expression, ok bool) {
 	ok = true
+
+	holdMult := false
+	holdDiv := false
 
 	actionIndex := 0
 	lastNumberIndex := 0
-	running := true
 
-	for running {
+	for {
 		var action string
 		action, actionIndex, ok = defineAction(actionIndex, lastNumberIndex, css)
 		if !ok {
@@ -57,30 +59,93 @@ func searchExpressions(css []string) (exps []expression, ok bool) {
 			}
 
 			r, _ := strconv.ParseFloat(strings.Join(css, ""), 64)
-			exps = append(exps, expression{result: r})
+			exps = append(exps, Expression{result: r})
 			ok = false
 
 			return exps, ok
 		}
 
-		var fn float64
+		if action == "*" || action == "/" {
+			if action == "*" {
+				holdMult = true
+			}
 
-		if len(exps) == 0 {
-			fn = extractFirstNumber(css, actionIndex)
+			if action == "/" {
+				holdDiv = true
+			}
+
+			if len(exps) != 0 {
+				actionIndex++
+				lastNumberIndex = actionIndex
+				action = ""
+			}
 		}
 
-		if len(exps) > 0 {
+		var fn float64
+		var fni int
+
+		if len(exps) == 0 {
+			if holdMult || holdDiv {
+				if lastNumberIndex == 0 {
+					fn, fni = extractFirstNumber(css, actionIndex, false)
+				}
+
+				if lastNumberIndex > 0 {
+					fn, fni = extractFirstNumber(css, actionIndex, true)
+				}
+			}
+
+			if !holdMult && !holdDiv {
+				fn, fni = extractFirstNumber(css, actionIndex, false)
+			}
+		}
+
+		if len(exps) > 0 && !holdMult {
 			fn = exps[len(exps)-1].result
 		}
 
-		ln, lni, okk := extractLastNumber(css, actionIndex)
-		if !okk {
-			return exps, false
+		var ln float64
+		var lni int
+
+		var okk = false
+
+		if fni > 0 {
+			ln, lni, okk = extractLastNumber(css, fni)
+			if !okk {
+				return exps, false
+			}
 		}
 
-		lastNumberIndex = lni + lastNumberIndex
+		if fni == 0 {
+			ln, lni, okk = extractLastNumber(css, actionIndex)
+			if !okk {
+				return exps, false
+			}
+		}
 
-		exps = append(exps, expression{
+		if fni == lni && action == "" {
+			if holdMult {
+				exps = append(exps, Expression{
+					result: execAction(fn, ln, "*"),
+				})
+			}
+
+			if holdDiv {
+				exps = append(exps, Expression{
+					result: execAction(fn, ln, "/"),
+				})
+			}
+
+			break
+		}
+
+		if action == "" {
+			action = "+"
+		}
+
+		lastNumberIndex = lni
+
+		exps = append(exps, Expression{
 			firstNumber: fn,
 			lastNumber:  ln,
 			action:      action,
@@ -94,7 +159,7 @@ func searchExpressions(css []string) (exps []expression, ok bool) {
 func defineAction(lastActionIndex int, lastNumberIndex int, css []string) (action string, actionIndex int, ok bool) {
 	ok = true
 
-	if lastActionIndex > len(css)-1 && lastNumberIndex <= len(css)-1 {
+	if lastActionIndex > len(css)-1 || lastNumberIndex >= len(css)-1 {
 		ok = false
 		return "", -1, ok
 	}
@@ -146,8 +211,44 @@ func searchAction(ss []string, start int) (a string, i int, ok bool) {
 	return
 }
 
-func extractFirstNumber(ss []string, actionIndex int) (fn float64) {
-	fn, _ = strconv.ParseFloat(strings.Join(gsub(ss[0:actionIndex]), ""), 64)
+func extractFirstNumber(ss []string, actionIndex int, holdMult bool) (fn float64, fni int) {
+	if holdMult {
+		fns := []string{}
+		fnss := []string{}
+
+		var ln = false
+
+		for i, s := range ss[actionIndex:] {
+			if val, okk := validActions[s]; okk {
+				if ln {
+					break
+				}
+
+				fnss = append(fnss, val)
+				continue
+			}
+
+			if _, okk := validNumbers[s]; okk {
+				fns = append(fns, s)
+				ln = true
+				fni = i + actionIndex
+				continue
+			}
+
+			if s == "." {
+				fns = append(fns, s)
+			}
+		}
+
+		fs := extractSymbol(fnss)
+		fns = append([]string{fs}, fns...)
+		fn, _ = strconv.ParseFloat(strings.Join(fns, ""), 64)
+	}
+
+	if !holdMult {
+		fn, _ = strconv.ParseFloat(strings.Join(gsub(ss[0:actionIndex]), ""), 64)
+	}
+
 	return
 }
 
@@ -176,24 +277,26 @@ func extractLastNumber(ss []string, actionIndex int) (ln float64, lni int, ok bo
 			}
 
 			if rm[i+1] == " " {
-				ok = false
-				break
+				if len(rm)-1 < i+2 {
+					ok = false
+					break
+				}
 			}
 
 			ns = append(ns, val)
 		}
 
-		if y, okk := validNumbers[s]; okk {
+		if _, okk := validNumbers[s]; okk {
 			lns = append(lns, s)
 			lnf = true
 
-			if actionIndex != 0 {
-				lni = y + start + 1
-			}
+			lni = i + start
+		}
 
-			if actionIndex == 0 {
-				lni = y + start
-			}
+		if s == "." {
+			lns = append(lns, s)
+
+			lni = i + start + 1
 		}
 	}
 
@@ -201,36 +304,7 @@ func extractLastNumber(ss []string, actionIndex int) (ln float64, lni int, ok bo
 		return
 	}
 
-	var ls string
-	if len(ns) > 1 {
-		var p = 0
-		for p < len(ns) {
-			if p == len(ns)-1 {
-				break
-			}
-
-			fs := ns[p]
-			ns := ns[p+1]
-
-			if fs == "-" && ns == "-" {
-				ls = "+"
-			}
-
-			if fs == "+" && ns == "-" || fs == "-" && ns == "+" {
-				ls = "-"
-			}
-
-			if fs == "+" && ns == "+" {
-				ls = "+"
-			}
-
-			p++
-		}
-	}
-
-	if len(ns) == 1 {
-		ls = ns[0]
-	}
+	ls := extractSymbol(ns)
 
 	if ls != "" {
 		lns = append([]string{ls}, lns...)
@@ -238,6 +312,41 @@ func extractLastNumber(ss []string, actionIndex int) (ln float64, lni int, ok bo
 
 	ln, _ = strconv.ParseFloat(strings.Join(lns, ""), 64)
 	return
+}
+
+func extractSymbol(symbols []string) string {
+	var ls string
+	if len(symbols) > 1 {
+		var p = 0
+		for p < len(symbols) {
+			if p == len(symbols)-1 {
+				break
+			}
+
+			firstSymbol := symbols[p]
+			lastSymbol := symbols[p+1]
+
+			if firstSymbol == "-" && lastSymbol == "-" {
+				ls = "+"
+			}
+
+			if firstSymbol == "+" && lastSymbol == "-" || firstSymbol == "-" && lastSymbol == "+" {
+				ls = "-"
+			}
+
+			if firstSymbol == "+" && lastSymbol == "+" {
+				ls = "+"
+			}
+
+			p++
+		}
+	}
+
+	if len(symbols) == 1 {
+		ls = symbols[0]
+	}
+
+	return ls
 }
 
 func execAction(fn, ln float64, action string) (r float64) {
