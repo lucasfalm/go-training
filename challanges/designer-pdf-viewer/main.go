@@ -47,34 +47,34 @@ func handleArgs() {
 
 // NOTE: sum of heights * highest height = result
 func designerPdfViewer(h []int32, word string) int32 {
-	totalHeightByIndex := getTotalHeightByIndex(h, word)
+	totalHeightByLetter := getTotalHeightByLetter(h, word)
 
-	max := calcMaxHeightOf(totalHeightByIndex)
-	total := int32(len(totalHeightByIndex))
+	max := calcMaxHeightOf(totalHeightByLetter)
+	total := int32(len(totalHeightByLetter))
 
 	return max * total
 }
 
-func getTotalHeightByIndex(h []int32, word string) map[int]int32 {
+func getTotalHeightByLetter(h []int32, word string) map[int]int32 {
 	alphabet := make(map[string]int32)
 
 	for i := 'a'; i <= 'z'; i++ {
 		alphabet[string(i)] = int32(i - 'a')
 	}
 
-	totalHeightByIndex := make(map[int]int32)
+	totalHeightByLetter := make(map[int]int32)
 
 	for i, word := range strings.Split(word, "") {
-		totalHeightByIndex[i] += h[alphabet[word]]
+		totalHeightByLetter[i] += h[alphabet[word]]
 	}
 
-	return totalHeightByIndex
+	return totalHeightByLetter
 }
 
-func calcMaxHeightOf(totalHeightByIndex map[int]int32) int32 {
+func calcMaxHeightOf(totalHeightByLetter map[int]int32) int32 {
 	var max int32
 
-	for _, height := range totalHeightByIndex {
+	for _, height := range totalHeightByLetter {
 		if height > max {
 			max = height
 		}
@@ -83,10 +83,10 @@ func calcMaxHeightOf(totalHeightByIndex map[int]int32) int32 {
 	return max
 }
 
-func calcTotalHeightOf(totalHeightByIndex map[int]int32) int32 {
+func calcTotalHeightOf(totalHeightByLetter map[int]int32) int32 {
 	var total int32
 
-	for _, height := range totalHeightByIndex {
+	for _, height := range totalHeightByLetter {
 		total += height
 	}
 
