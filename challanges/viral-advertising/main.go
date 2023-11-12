@@ -13,6 +13,8 @@ func main() {
 
 // NOTE: https://www.hackerrank.com/challenges/strange-advertising/problem?isFullScreen=true
 func viralAdvertising(days int32) (likes int32) {
+	const firstDayShares int32 = 5
+
 	var shared int32
 
 	var sharesPerLike int32 = 3
@@ -23,13 +25,17 @@ func viralAdvertising(days int32) (likes int32) {
 		shared = newLikes * sharesPerLike
 		likes += calcLikes((shared))
 
-		if i == 1 {
-			shared += 5
+		if isFirstDay(i) {
+			shared += firstDayShares
 			likes += calcLikes((shared))
 		}
 	}
 
 	return
+}
+
+func isFirstDay(day int32) bool {
+	return day == 1
 }
 
 func calcLikes(recipients int32) int32 {
