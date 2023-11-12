@@ -12,9 +12,8 @@ func main() {
 }
 
 // NOTE: https://www.hackerrank.com/challenges/strange-advertising/problem?isFullScreen=true
-func viralAdvertising(days int32) int32 {
+func viralAdvertising(days int32) (likes int32) {
 	var shared int32
-	var likes int32
 
 	var sharesPerLike int32 = 3
 
@@ -30,7 +29,7 @@ func viralAdvertising(days int32) int32 {
 		}
 	}
 
-	return likes
+	return
 }
 
 func calcLikes(recipients int32) int32 {
