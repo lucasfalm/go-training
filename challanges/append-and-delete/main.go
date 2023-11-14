@@ -10,6 +10,7 @@ func main() {
 	fmt.Println(appendAndDelete("abc", "def", 3))
 }
 
+// NOTE: https://www.hackerrank.com/challenges/append-and-delete/problem?isFullScreen=true - 10/13
 func appendAndDelete(s string, t string, k int32) string {
 	var y string = "Yes"
 	var n string = "No"
