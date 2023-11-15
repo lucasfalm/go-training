@@ -3,24 +3,13 @@ package main
 import "fmt"
 
 func main() {
-	// var f = 99999997668
+	var t int64 = 99999997668
 
-	fmt.Println(strangeCounter(99999997668))
+	fmt.Println(strangeCounter(t))
 }
 
 // NOTE: https://www.hackerrank.com/challenges/strange-code/problem?isFullScreen=true
 func strangeCounter(t int64) int64 {
-	/*
-		NOTE: infinite loop
-					cT = 1
-					pInitialV = 3
-					cV = 3
-					each interaction decrements cV && increments cT
-					if cV == 1 then reset pInitialV = pInitialV * 2 && cV = pInitialV
-					if cT equals t then break
-
-	*/
-
 	var r int64
 
 	// r = v1(t)
