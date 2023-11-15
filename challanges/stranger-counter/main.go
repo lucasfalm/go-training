@@ -18,6 +18,7 @@ func strangeCounter(t int64) int64 {
 	return r
 }
 
+// NOTE: 85% - timing out the challenge when t is a big num
 func v1(t int64) int64 {
 	var cT int64 = 1
 	var pInitialV int64 = 3
@@ -47,6 +48,7 @@ heart:
 	return r
 }
 
+// NOTE: 100% - very fast (shorter loops than v1)
 func v2(t int64) int64 {
 	var r int64
 
