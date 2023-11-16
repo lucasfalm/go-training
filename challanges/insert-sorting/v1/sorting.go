@@ -3,7 +3,7 @@ package sortingv1
 import "github.com/lucasfalm/go-training/challanges/insert-sorting/printer"
 
 // NOTE: https://www.hackerrank.com/challenges/insertionsort1/problem?isFullScreen=true
-func InsertionSort1(n int32, arr []int32) {
+func InsertionSort(n int32, arr []int32) {
 	var (
 		pv int32 = arr[n-1]
 		i  int32 = n - 1

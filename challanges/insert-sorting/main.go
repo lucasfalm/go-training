@@ -11,6 +11,6 @@ func main() {
 
 	printer.PrintFormatted(arr)
 
-	sortingv1.InsertionSort1(10, arr)
-	sortingv2.InsertionSort2(10, arr)
+	sortingv1.InsertionSort(10, arr)
+	sortingv2.InsertionSort(10, arr)
 }
