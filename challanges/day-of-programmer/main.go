@@ -7,6 +7,7 @@ import (
 	"github.com/lucasfalm/go-training/challanges/day-of-programmer/components"
 )
 
+// NOTE: https://www.hackerrank.com/challenges/day-of-the-programmer/problem?isFullScreen=true
 func main() {
 	fmt.Println(dayOfProgrammer(1918))
 }

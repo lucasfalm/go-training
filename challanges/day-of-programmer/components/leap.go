@@ -2,7 +2,6 @@ package components
 
 var (
 	jCalendarE int32 = 1917
-
 	gCalendarB int32 = 1918
 )
 
