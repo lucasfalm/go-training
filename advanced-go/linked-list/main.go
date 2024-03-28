@@ -9,15 +9,15 @@ import (
 func main() {
 	linkedList := linked_list_core.LinkedList{}
 
-	fmt.Println("adding 32")
+	fmt.Println("pushing 32")
 	linkedList.Push(32)
 	linkedList.Print()
 
-	fmt.Println("adding 10")
+	fmt.Println("pushing 10")
 	linkedList.Push(10)
 	linkedList.Print()
 
-	fmt.Println("adding 5")
+	fmt.Println("pushing 5")
 	linkedList.Push(5)
 	linkedList.Print()
 
@@ -40,5 +40,9 @@ func main() {
 	linkedList.Push(1920)
 	linkedList.Push(100000)
 	linkedList.Push(2)
+	linkedList.Print()
+
+	fmt.Println("unshifting 88...")
+	linkedList.Unshift(88)
 	linkedList.Print()
 }
