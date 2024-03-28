@@ -1,4 +1,4 @@
-package linked_list_core
+package linkedlist
 
 // NOTE: shows the last node
 func (l *LinkedList) Last() *Node {

@@ -1,4 +1,4 @@
-package linked_list_core
+package linkedlist
 
 import "fmt"
 
@@ -20,7 +20,9 @@ func (l *LinkedList) FindWithPrint(value any) *Node {
 		}
 
 		fmt.Println(msg)
-	} else {
+	}
+
+	if result == nil {
 		fmt.Println("node has not been found")
 	}
 

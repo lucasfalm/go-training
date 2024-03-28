@@ -1,4 +1,4 @@
-package linked_list_core
+package linkedlist
 
 // NOTE: remove the last node
 func (l *LinkedList) Pop() *Node {

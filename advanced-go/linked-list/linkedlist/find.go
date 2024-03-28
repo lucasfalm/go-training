@@ -1,4 +1,4 @@
-package linked_list_core
+package linkedlist
 
 // NOTE: search among the nodes
 func (l *LinkedList) Find(value any) *Node {

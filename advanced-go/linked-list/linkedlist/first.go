@@ -1,4 +1,4 @@
-package linked_list_core
+package linkedlist
 
 // NOTE: shows the first node
 func (l *LinkedList) First() *Node {

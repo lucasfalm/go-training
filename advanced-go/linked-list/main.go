@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	linked_list_core "github.com/lucasfalm/go-training/advanced-go/linked-list/linked-list-core"
+	linkedlist "github.com/lucasfalm/go-training/advanced-go/linked-list/linkedlist"
 )
 
 func main() {
-	linkedList := linked_list_core.LinkedList{}
+	linkedList := linkedlist.LinkedList{}
 
 	fmt.Println("pushing 32")
 	linkedList.Push(32)

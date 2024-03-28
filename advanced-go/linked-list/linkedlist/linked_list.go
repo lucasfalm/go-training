@@ -1,5 +1,6 @@
-package linked_list_core
+package linkedlist
 
+// NOTE: doubly linked list
 type LinkedList struct {
 	Nodes []*Node
 	Count int

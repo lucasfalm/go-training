@@ -1,4 +1,4 @@
-package linked_list_core
+package linkedlist
 
 // NOTE: insert as the last node
 func (l *LinkedList) Push(value any) *Node {

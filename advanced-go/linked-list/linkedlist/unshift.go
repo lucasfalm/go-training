@@ -1,4 +1,4 @@
-package linked_list_core
+package linkedlist
 
 // NOTE: insert as the first node
 func (l *LinkedList) Unshift(value any) *Node {
