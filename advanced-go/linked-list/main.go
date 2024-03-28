@@ -45,4 +45,10 @@ func main() {
 	fmt.Println("unshifting 88...")
 	linkedList.Unshift(88)
 	linkedList.Print()
+
+	fmt.Println("searching value 1920...")
+	linkedList.FindWithPrint(1920)
+
+	fmt.Println("searching value 5...")
+	linkedList.FindWithPrint(5)
 }
